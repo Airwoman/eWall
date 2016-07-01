@@ -14,12 +14,23 @@
   <tbody>
     <% @groups.each do |group| %>
       <tr>
+        <% if @current_user && @current_user.id == group.creator_id %>
+
         <td><%= group.name %></td>
         <td><%= group.creator_id %></td>
-        <td><%= link_to 'Join', group %></td>
         <td><%= link_to 'Show', group %></td>
         <td><%= link_to 'Edit', edit_group_path(group) %></td>
         <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% elsif @current_user && @current_user.groups.include?(group)%>
+        <td><%= group.name %></td>
+        <td><%= group.creator_id %></td>
+        <td><%= link_to 'Show', group %></td>
+        <% elsif @current_user %>
+        <td><%= group.name %></td>
+        <td><%= group.creator_id %></td>
+        <td><%= link_to 'Join', join_path(id: group.id), method: :patch%></td>
+        <td><%= link_to 'Show', group %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

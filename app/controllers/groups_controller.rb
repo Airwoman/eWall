@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :set_group, only: [:join, :show, :edit, :update, :destroy]
 
   # GET /groups
   # GET /groups.json
@@ -10,6 +10,12 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+  end
+
+  def join
+
+    @group.users << @current_user
+    redirect_to users_path
   end
 
   # GET /groups/new
@@ -26,7 +32,7 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
     @group.creator_id = @current_user.id
-    
+
 
     respond_to do |format|
       if @group.save
