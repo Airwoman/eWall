@@ -17,7 +17,11 @@
       <tr>
         <td><%= photo.description %></td>
         <td><%= photo.uploader_id %></td>
-        <td><%= photo.image %></td>
+
+        <% photo.image.each do |img|%>
+          <td><%= image_tag(img.url)%></td>
+        <% end %>
+
         <td><%= link_to 'Show', photo %></td>
         <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
         <td><%= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>

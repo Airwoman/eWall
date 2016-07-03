@@ -1,34 +1,64 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
 
-<p>
-  <strong>User name:</strong>
-  <%= @user.user_name %>
-</p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
 
-<p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
-</p>
 
-<p>
-  <strong>Role:</strong>
-  <%= @user.role %>
-</p>
+<div class="container">
+      <div class="row">
+      <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+      </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
 
-<p>
-  <strong>Image:</strong>
-  <%= @user.image %>
-</p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= @user.name %></h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3 col-lg-3 " align="center">
+                  <%= image_tag(@user.image, class: "img-circle img-responsive") %>
+                </div>
+
+                <div class=" col-md-9 col-lg-9 ">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td><strong>User name:</strong></td>
+                        <td><%= @user.user_name %></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Email:</strong></td>
+                        <td><%= @user.email %></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Role:</strong></td>
+                        <td><%= @user.role %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <a href="#" class="btn btn-primary">Photos admin</a>
+                  <a href="#" class="btn btn-primary">Group admin</a>
+                </div>
+              </div>
+            </div>
+                 <div class="panel-footer">
+                   <%= link_to users_path, class:"btn btn-sm btn-primary" do%>
+                   <i class="fa fa-arrow-circle-left fa-2x" aria-hidden="true"></i>
+                   <% end %>
+                    <span class="pull-right">
+                      <%= link_to edit_user_path(@user), class:"btn btn-sm btn-warning" do%>
+                      <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+                      <% end %>
+                      <%= link_to @user, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-sm btn-primary" do%>
+                      <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+                      <% end %>
+                    </span>
+                </div>
+
+          </div>
+        </div>
+      </div>
+    </div>

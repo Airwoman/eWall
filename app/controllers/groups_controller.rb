@@ -1,10 +1,16 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:join, :show, :edit, :update, :destroy]
+  before_action :set_group, only: [:join, :show, :edit, :update, :destroy, :photos]
 
   # GET /groups
   # GET /groups.json
   def index
     @groups = Group.all
+  end
+
+  def photos
+    @photos = @group.photos
+
+    render '/photos/index'
   end
 
   # GET /groups/1

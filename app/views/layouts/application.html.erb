@@ -5,34 +5,64 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <link rel="stylesheet" href="/assets/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+
+
 </head>
 <body>
+  <div class="menu">
+    <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Home</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
 
 
-<nav>
+      <% if @current_user && @current_user.role == 1 %>
+      <ul class="nav navbar-nav">
+        <li><%= link_to "All users", users_path%></li>
+        <li><%= link_to "View profile", @current_user %></li>
+        <li><%= link_to "Edit profile", edit_user_path(@current_user) %></li>
+        <li><%= link_to "Delete profile", user_path(@current_user), :method => :delete %></li>
+        <li><%= link_to "Create Group", new_group_path%></li>
+        <li><%= link_to "Group list", groups_path%></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Log out", logout_path, :method => :delete%></li>
+      </ul>
 
-  <% if @current_user && @current_user.role == 1 %>
-    <%= link_to "All users", users_path%>
-    <%= link_to "View profile", @current_user %>
-    <%= link_to "Edit profile", edit_user_path(@current_user) %>
-    <%= link_to "Delete profile", user_path(@current_user), :method => :delete %>
-    <%= link_to "Create Group", new_group_path%>
-    <%= link_to "Group list", groups_path%>
-    <%= link_to "Log out", logout_path, :method => :delete%>
-  <% elsif @current_user && @current_user.role != 1 %>
-    <%= link_to "View profile", @current_user %>
-    <%= link_to "Edit profile", edit_user_path(@current_user) %>
-    <%= link_to "Create Group", new_group_path%>
-    <%= link_to "Group list", groups_path%>
+      <% elsif @current_user && @current_user.role != 1 %>
+      <ul class="nav navbar-nav">
+        <li><%= link_to "View profile", @current_user %></li>
+        <li><%= link_to "Edit profile", edit_user_path(@current_user) %></li>
+        <li><%= link_to "Create Group", new_group_path%></li>
+        <li><%= link_to "Group list", groups_path%></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Log out", logout_path, :method => :delete%></li>
+      </ul>
 
-    <%= link_to "Log out", logout_path, :method => :delete%>
-  <% else %>
-    <%= link_to "Create an account", new_user_path%>
-    <%= link_to "Log in", login_path%>
-  <% end %>
+      <% else %>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "SignUp", new_user_path%></li>
+        <li><%= link_to "Login", login_path%></li>
+      </ul>
+      <% end %>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
-
+  </div>
 
 
 
@@ -53,6 +83,7 @@
   <%end%>
 
 <%= yield %>
+
 
 </body>
 </html>

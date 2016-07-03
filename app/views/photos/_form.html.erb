@@ -16,7 +16,7 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :Group %><br>
+    <%= f.label :group %><br>
     <% group_array = @groups.map { |group| [group.name] } %>
     <%= select_tag "group", options_for_select(group_array) %>
   </div>
@@ -24,11 +24,8 @@
     <%= f.label :image %><br>
 
     <% @photo.image.each do |img|%>
-
     <div id="image_display">
-    <%= image_tag(img.url)%>
-    </div><div>
-    <%= image_tag("icon_del.gif", :class => "del_photo")%>
+      <%= image_tag(img.url)%>
     </div>
     <% end %>
 

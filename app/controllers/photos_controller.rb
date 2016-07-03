@@ -26,14 +26,17 @@ class PhotosController < ApplicationController
   # POST /photos
   # POST /photos.json
   def create
-
+    @groups = Group.all
 
     @photo = Photo.new(photo_params)
+
+    group = @groups.find_by(name: params['group'])
+    @photo.groups << group
+    @photo.uploader_id = @current_user.id
 
 
     respond_to do |format|
       if @photo.save
-        @photo.uploader_id = @current_user.id
         format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
         format.json { render :show, status: :created, location: @photo }
       else
