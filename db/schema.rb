@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701144219) do
+ActiveRecord::Schema.define(version: 20160702142258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,14 @@ ActiveRecord::Schema.define(version: 20160701144219) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "groups_photos", id: false, force: :cascade do |t|
+    t.integer "group_id", null: false
+    t.integer "photo_id", null: false
+  end
+
+  add_index "groups_photos", ["group_id", "photo_id"], name: "index_groups_photos_on_group_id_and_photo_id", using: :btree
+  add_index "groups_photos", ["photo_id", "group_id"], name: "index_groups_photos_on_photo_id_and_group_id", using: :btree
+
   create_table "groups_users", id: false, force: :cascade do |t|
     t.integer "group_id", null: false
     t.integer "user_id",  null: false
@@ -30,6 +38,14 @@ ActiveRecord::Schema.define(version: 20160701144219) do
 
   add_index "groups_users", ["group_id", "user_id"], name: "index_groups_users_on_group_id_and_user_id", using: :btree
   add_index "groups_users", ["user_id", "group_id"], name: "index_groups_users_on_user_id_and_group_id", using: :btree
+
+  create_table "photos", force: :cascade do |t|
+    t.text     "description"
+    t.integer  "uploader_id"
+    t.json     "image"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

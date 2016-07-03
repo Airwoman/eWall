@@ -1,0 +1,21 @@
+// Place all the styles related to the Photos controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.image_display{
+  float: left;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+.del_photo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  float:right;
+  margin:5px 5px 0 0;
+  z-index: 5;
+}
+#container { overflow:auto; }
+.image { width:100px;height:100px;float:left;position:relative; }
+a.delete { display:none;position:absolute;top:0;right:0;width:30px;height:30px;text-indent:-999px; }
+.image:hover a.delete { display:block; }
