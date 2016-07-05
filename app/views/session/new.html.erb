@@ -1,53 +1,110 @@
-
-
-<%= form_tag login_path do%>
-
-
 <div class="container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-7">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-lock"></span> Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-3 control-label">
-                            Email</label>
-                        <div class="col-sm-9">
-                          <%= email_field_tag :email,nil, class: "form-control"%>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-3 control-label">
-                            Password</label>
-                        <div class="col-sm-9">
-                          <%= password_field_tag :password, nil, class: "form-control"%>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-9">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"/>
-                                    Remember me
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group last">
-                        <div class="col-sm-offset-3 col-sm-9">
-                          <%= submit_tag "Submit", class: "btn btn-success btn"%>
-                          <%= submit_tag "Reset", class: "btn btn-success btn"%>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <div class="panel-footer">
-                    Not Registred? <a href="http://www.jquery2dotnet.com">Register here</a></div>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="grid">
+        <% (1..35).to_a.shuffle.each do |index| %>
+          <%= image_tag("/assets/ico/classmate#{index}") %>
+        <% end %>
+      </div>
     </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-sign-in" aria-hidden="true"></i> Login
+        </div>
+        <div class="panel-body">
+          <%= form_tag login_path, class: "form-horizontal", role: 'form', id: 'login' do%>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Email</label>
+              <div class="col-sm-9">
+                <%= email_field_tag :email,nil, class: "form-control"%>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Password</label>
+              <div class="col-sm-9">
+                <%= password_field_tag :password, nil, class: "form-control"%>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <div class="checkbox">
+                  <label><input type="checkbox"/>Remember me</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group last">
+              <div class="col-sm-offset-3 col-sm-9">
+                <%= submit_tag "Submit", class: "btn btn-success btn submit"%>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="panel-footer">
+          Not register? <a href="#">Register here</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<% end %>
+<script type="text/javascript">
+
+$('.submit').on('click', function (event, force) {
+    if (!force) {
+        var that = $("#login");
+        event.preventDefault();
+        setTimeout(function () {
+          console.log("sss");
+          that.submit();
+        }, 1500);
+    }
+});
+
+
+
+$("img").css({
+  "opacity": "0"
+});
+
+
+var d = 0;
+var ry, tz, s;
+$(document).ready(function () {
+   storm().promise().done($(".submit").on("click", function(){
+      disappear();
+  }))
+});
+
+function disappear() {
+  $("img").each(function(){
+      d = Math.random()*1000; //1ms to 1000ms delay
+      $(this).delay(d).animate({opacity: 0}, {
+          step: function(n){
+              s = 1-n; //scale - will animate from 0 to 1
+              $(this).css("transform", "scale("+s+")");
+          },
+          duration: 1000
+      })
+  })
+}
+
+function storm(){
+    return $("img").each(function(){
+        d = Math.random()*1000;
+        $(this).delay(d).animate({opacity: 1}, {
+            step: function(n){
+                //rotating the images on the Y axis from 360deg to 0deg
+                ry = (1-n)*360;
+                //translating the images from 1000px to 0px
+                tz = (1-n)*1000;
+                //applying the transformation
+                $(this).css("transform", "rotateY("+ry+"deg) translateZ("+tz+"px)");
+            },
+            duration: 3000,
+            easing: 'easeOutQuint'
+        })
+    })
+}
+
+</script>

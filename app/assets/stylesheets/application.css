@@ -15,12 +15,24 @@
  *= require_self
 
  */
- body {
-   background-color: #fff;
- }
+body {
+  background-color: #fff;
+}
 
- .panel-default {
- opacity: 0.9;
- margin-top:30px;
- }
- .form-group.last { margin-bottom:0px; }
+.panel-default {
+  opacity: 0.9;
+  margin-top:50px;
+}
+.form-group.last {
+  margin-bottom:0px;
+}
+.grid {
+  width: 600px; height: 400px; margin-top: 50px;
+  perspective: 500px; /*For 3d*/
+}
+.grid img {
+  width: 80px;
+  height: 80px;
+  display: block;
+  float: left;
+}
