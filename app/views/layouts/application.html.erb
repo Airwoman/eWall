@@ -38,6 +38,9 @@
         <li><%= link_to "Edit profile", edit_user_path(@current_user) %></li>
         <li><%= link_to "Create Group", new_group_path%></li>
         <li><%= link_to "Group list", groups_path%></li>
+        <li><%= link_to "Photos", photos_path%></li>
+        <li><%= link_to "Create photo", new_photo_path%></li>
+
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Hi,#{@current_user.name}", @current_user  %></li>

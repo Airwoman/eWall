@@ -11,33 +11,87 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :group %><br>
-    <% group_array = @groups.map { |group| [group.name] } %>
-    <%= select_tag "group", options_for_select(group_array) %>
-  </div>
-  <div class="field">
-    <%= f.label :image %><br>
 
-    <% @photo.image.each do |img|%>
-    <div id="image_display">
-      <%= image_tag(img.url)%>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 col-lg-2 " align="center">
+      </div>
+      <div class="col-md-8 col-lg-8 " align="center">
+        <div class="panel panel-default">
+          <div class="panel-body">
+
+            <div class="row">
+              <div class="col-md-3 col-xs-3 table_title">
+                <p class="help-block"></p>
+                <label class="control-label">Upload Image</label>
+                <p class="help-block"></p>
+              </div>
+              <div class="col-md-9 col-xs-9 photo_form">
+                <div class="controls">
+                  <p class="help-block"></p>
+                  <%= f.file_field :image, multiple: true %>
+                  <p class="help-block"></p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 col-xs-3 table_title">
+                <p class="help-block"></p>
+                <label class="control-label">Selete Group</label>
+                <p class="help-block"></p>
+              </div>
+              <div class="col-md-9 col-xs-9 photo_form">
+                <div class="controls">
+                  <p class="help-block"></p>
+                  <% group_array = @groups.map { |group| [group.name] } %>
+                  <%= select_tag "group", options_for_select(group_array) %>
+                  <p class="help-block"></p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3 col-xs-3 table_title">
+                <p class="help-block"></p>
+                <label class="control-label">Photo Description</label>
+                <p class="help-block"></p>
+              </div>
+              <div class="col-md-9 col-xs-9 photo_form">
+                <div class="controls">
+                  <p class="help-block"></p>
+                  <%= f.text_area :description, size: "50x10" %>
+                  <p class="help-block"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 col-xs-3 table_title">
+              </div>
+              <div class="col-md-9 col-xs-9 photo_form">
+                <div class="controls">
+                  <p class="help-block"></p>
+                  <% @photo.image.each do |img|%>
+                  <div id="image_display">
+                    <%= image_tag(img.url)%>
+                  </div>
+                  <% end %>
+                  <p class="help-block"></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <%= f.submit "Submit", class: "btn btn-primary"%>
+              <%= link_to 'Back', photos_path,class: "btn btn-default" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-lg-2 " align="center">
+      </div>
     </div>
-    <% end %>
-
   </div>
 
 
-
-  <div class="field">
-    <%= f.label :image %><br>
-    <%= f.file_field :image, multiple: true %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

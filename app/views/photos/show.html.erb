@@ -1,21 +1,57 @@
 <p id="notice"><%= notice %></p>
+<div class="container pages">
+  <div class="row">
+  <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+  </div>
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2 toppad" >
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Photo</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class=" col-md-12 col-lg-12 ">
+              <table class="table table-user-information">
+                <tbody>
+                  <tr>
+                    <td><strong>Image : </strong></td>
+                    <% @photo.image.each do |img|%>
+                    <td>
+                    <%= image_tag(img.url) %>
+                    </td>
+                    <% end %>
+                  </tr>
+                  <tr>
+                    <td><strong>Uploader : </strong></td>
+                    <td><%= @uploader.name %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Description : </strong></td>
+                    <td><%= @photo.description %></td>
+                  </tr>
+                </tbody>
+              </table>
 
-<p>
-  <strong>Description:</strong>
-  <%= @photo.description %>
-</p>
-
-<p>
-  <strong>Uploader:</strong>
-  <%= @photo.uploader_id %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <% @photo.image.each do |img|%>
-  <%= image_tag(img.url) %>
-  <% end %>
-</p>
-
-<%= link_to 'Edit', edit_photo_path(@photo) %> |
-<%= link_to 'Back', photos_path %>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer">
+         <%= link_to photos_path, class:"btn btn-sm btn-primary" do%>
+         <i class="fa fa-arrow-circle-left fa-2x" aria-hidden="true"></i>
+         <% end %>
+         <% if @current_user && @current_user.id == @photo.uploader_id || @current_user.role == 1%>
+            <span class="pull-right">
+              <%= link_to edit_photo_path(@photo), class:"btn btn-sm btn-warning" do%>
+              <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
+              <% end %>
+              <%= link_to @photo, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-sm btn-primary" do%>
+              <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+              <% end %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,9 @@ class PhotosController < ApplicationController
   # GET /photos/1
   # GET /photos/1.json
   def show
+    user=User.all
+    @uploader = user.find(@photo.uploader_id)
+
   end
 
   # GET /photos/new
