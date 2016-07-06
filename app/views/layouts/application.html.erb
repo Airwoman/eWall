@@ -36,7 +36,6 @@
         <li><%= link_to "All users", users_path%></li>
         <li><%= link_to "View profile", @current_user %></li>
         <li><%= link_to "Edit profile", edit_user_path(@current_user) %></li>
-        <li><%= link_to "Delete profile", user_path(@current_user), :method => :delete %></li>
         <li><%= link_to "Create Group", new_group_path%></li>
         <li><%= link_to "Group list", groups_path%></li>
       </ul>

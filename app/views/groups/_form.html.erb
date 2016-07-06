@@ -11,12 +11,36 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 col-lg-2 " align="center">
+      </div>
+      <div class="col-md-8 col-lg-8 " align="center">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-3 col-xs-3 table_title">
+                <p class="help-block"></p>
+                <label class="control-label">Group Name</label>
+                <p class="help-block"></p>
+              </div>
+              <div class="col-md-9 col-xs-9">
+                <div class="controls">
+                  <p class="help-block"></p>
+                  <%= f.text_field :name, class:"form-control" %>
+                  <p class="help-block"></p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <%= f.submit "Submit", class: "btn btn-primary"%>
+              <%= link_to 'Back', groups_path ,class: "btn btn-default" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
