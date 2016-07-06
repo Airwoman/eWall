@@ -2089,7 +2089,6 @@ th {
 .table {
     width: 100%;
     max-width: 100%;
-    margin-bottom: 20px
 }
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     padding: 8px;
@@ -4299,7 +4298,6 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
 }
 .alert {
     padding: 15px;
-    margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px
 }
