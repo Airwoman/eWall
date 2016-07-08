@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="/assets/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <style media="screen">
+  </style>
+
+  <script>
+  $(function() {
+    $( "#dragimage" ).draggable();
+
+  });
+  $(function() {
+    $( ".image_display" ).resizable();
+
+  });
+  </script>
+  <title>eWall</title>
+</head>
+<body>
+  <div class="wall">
+    <% @photo_owned.image.each do |p| %>
+    <div id="dragimage">
+      <%=image_tag p.url, class:"ui-widget-content image_display"%>
+
+    </div>
+    <% end %>
+  </div>
+  <div class="personalstack">
+
+  </div>
+  <div class="bttm">
+
+  </div>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+      $(".bttm").mouseover(function(){
+       $(".personalstack").slideDown("slow");
+      });
+      $(".bttm").mouseout(function(){
+        $(".personalstack").slideUp("slow");
+      });
+    });
+
+  </script>
+</body>
+</html>

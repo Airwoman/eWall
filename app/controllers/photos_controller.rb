@@ -30,7 +30,6 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     @groups = Group.all
-
     @photo = Photo.new(photo_params)
 
     group = @groups.find_by(name: params['group'])

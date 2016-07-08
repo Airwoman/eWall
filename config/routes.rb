@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get 'photos' => 'groups#photos', on: :member
   end
   resources :users
+  get '/wall' => 'wall#index', :as => 'ewall'
   get '/login' => 'session#new', :as => 'login'
   post '/login' => 'session#create'
   delete '/logout' => 'session#destroy', :as => 'logout'

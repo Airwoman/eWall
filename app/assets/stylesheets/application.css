@@ -35,3 +35,20 @@ body {
   display: block;
   float: left;
 }
+
+.personalstack{
+  height:10vh;
+  width: 100vw;
+  background: #000;
+  display: none;
+  bottom: 5vh;
+  position: fixed;;
+}
+.bttm{
+  background: rgba(255, 0, 0, 0.5);;
+  height: 5vh;
+  width: 100vw;
+  bottom: 0;
+  position: fixed;;
+
+}
