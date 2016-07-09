@@ -15,7 +15,7 @@
     height: 10vh;
     min-height: 8em;
     padding: 1em;
-    bottom: 0;
+    bottom: -15vh;
     background: #000;
     position: fixed;
   }
@@ -206,6 +206,24 @@
 
 
 </div>
+<script>
+ $(document).ready(function(){
+  $("#gallery").mouseover(function(){
+		$(this).css({
+			"bottom": "0",
+			"-webkit-transition": "bottom 2s"
+		});
+	});
+	$("#gallery").mouseout(function () {
+		window.setTimeout(function () {
+			$("#gallery").css({
+				"bottom": "-15vh"
+			});
+		}, 10000);
+	});
+
+});
+</script>
 
 
 </body>

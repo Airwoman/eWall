@@ -38,7 +38,7 @@
     height: 15vh;
     min-height: 8em;
 
-		bottom: 0;
+		bottom: -10vh;
     background: #000;
     position: fixed;
   }
@@ -189,7 +189,6 @@
 
 		<% end %>
 	<% end %>
-
 </ul>
 
 </div>
@@ -198,6 +197,24 @@
 </span> Transfer Station
 </h4>
 </div>
+<script>
+ $(document).ready(function(){
+  $("#transfer").mouseover(function(){
+		$(this).css({
+			"bottom": "0",
+			"-webkit-transition": "bottom 2s"
+		});
+	});
+	$("#transfer").mouseout(function () {
+		window.setTimeout(function () {
+			$("#transfer").css({
+				"bottom": "-10vh"
+			});
+		}, 10000);
+	});
+
+});
+</script>
 
 </body>
 </html>

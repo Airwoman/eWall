@@ -49,7 +49,7 @@ body {
 .contents{
   background: #fff;
 }
-.new_group,.new_member, .new_comment{
+/*.new_group,.new_member, .new_comment{
   position: relative;
   margin: 35px;
   margin-bottom: 25px;
@@ -58,7 +58,7 @@ body {
   height: 15vh;
   min-height: 15em;
 
-}
+}*/
 .panel-body.g_g{
   background: #424f32;
 }
