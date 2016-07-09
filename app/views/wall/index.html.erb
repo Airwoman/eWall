@@ -32,7 +32,7 @@
   .gallery li a.ui-icon-zoomin { float: left; }
   .gallery li img { width: 100%; height: 100%; cursor: move; }
 
-  #trash {
+  #transfer {
     margin: 0;
     float: right;
     width: 100%;
@@ -40,16 +40,16 @@
     min-height: 20em;
     background: #424f32;
   }
-  #trash h4 .ui-icon { float: left; }
-  #trash .gallery h5 { display: none; }
+  #transfer h4 .ui-icon { float: left; }
+  #transfer .gallery h5 { display: none; }
   </style>
 
 
   <script>
   $(function() {
-    // there's the gallery and the trash
+    // there's the gallery and the transfer
     var $gallery = $( "#gallery" ),
-      $trash = $( "#trash" );
+      $transfer = $( "#transfer" );
 
     // let the gallery items be draggable
     $( "li", $gallery ).draggable({
@@ -61,10 +61,11 @@
     });
 
 
-    // let the trash be droppable, accepting the gallery items
+    // let the transfer be droppable, accepting the gallery items
     $( "li", $gallery ).resizable({
+      autoHide:true
     });
-    $trash.droppable({
+    $transfer.droppable({
       accept: "#gallery > li",
       activeClass: "ui-state-highlight",
       drop: function( event, ui ) {
@@ -72,9 +73,9 @@
       }
     });
 
-    // let the gallery be droppable as well, accepting items from the trash
+    // let the gallery be droppable as well, accepting items from the transfer
     $gallery.droppable({
-      accept: "#trash li",
+      accept: "#transfer li",
       activeClass: "custom-state-active",
       drop: function( event, ui ) {
         recycleImage( ui.draggable );
@@ -85,11 +86,11 @@
     // var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
     // function deleteImage( $item ) {
     //   $item.fadeOut(function() {
-    //     var $list = $( "ul", $trash ).length ?
-    //       $( "ul", $trash ) :
-    //       $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $trash );
+    //     var $list = $( "ul", $transfer ).length ?
+    //       $( "ul", $transfer ) :
+    //       $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $transfer );
     //
-    //     $item.find( "a.ui-icon-trash" ).remove();
+    //     $item.find( "a.ui-icon-circle-arrow-n" ).remove();
     //     $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
     //       $item
     //         .animate({ width: "48px" })
@@ -106,14 +107,16 @@
 
       $item.find("img").appendTo ($li).appendTo ($pic);
       $item.remove();
-      $("img",$trash).resizable();
-      $("div",$trash).draggable({
+      $("img",$transfer).resizable({
+        autoHide:true
+      });
+      $("div",$transfer).draggable({
         stack: 'div'
       });
     }
 
     // image recycle function
-    var trash_icon = "<a href='link/to/move' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>";
+    var transfer_icon = "<a href='link/to/move' title='Delete this image' class='ui-icon ui-icon-circle-arrow-n'>Delete image</a>";
     function recycleImage( $item ) {
       $item.fadeOut(function() {
         $item
@@ -121,7 +124,7 @@
             .remove()
           .end()
           .css( "width", "96px")
-          .append( trash_icon )
+          .append( transfer_icon )
           .find( "img" )
             .css( "height", "72px" )
           .end()
@@ -156,7 +159,7 @@
       var $item = $( this ),
         $target = $( event.target );
 
-      if ( $target.is( "a.ui-icon-trash" ) ) {
+      if ( $target.is( "a.ui-icon-circle-arrow-n" ) ) {
         deleteImage( $item );
       } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
         viewLargerImage( $target );
@@ -170,7 +173,7 @@
   </script>
 </head>
 <body>
-  <div id="trash" class="ui-widget-content ui-state-default">
+  <div id="transfer" class="ui-widget-content ui-state-default">
     <ul id="pics">
 
     </ul>
@@ -181,22 +184,22 @@
   <li class="ui-widget-content ui-corner-tr">
     <img src="/assets/1.jpg" alt="The peaks of High Tatras" width="96" height="72">
     <a href="/assets/1.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
+    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-circle-arrow-n">Delete image</a>
   </li>
   <li class="ui-widget-content ui-corner-tr">
     <img src="/assets/2.jpg" alt="The chalet at the Green mountain lake" width="96" height="72">
     <a href="/assets/2.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
+    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-circle-arrow-n">Delete image</a>
   </li>
   <li class="ui-widget-content ui-corner-tr">
     <img src="/assets/3.jpg" alt="Planning the ascent" width="96" height="72">
     <a href="/assets/3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
+    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-circle-arrow-n">Delete image</a>
   </li>
   <li class="ui-widget-content ui-corner-tr">
     <img src="/assets/4.jpg" alt="On top of Kozi kopka" width="96" height="72">
     <a href="/assets/4.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
-    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
+    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-circle-arrow-n">Delete image</a>
   </li>
 </ul>
 

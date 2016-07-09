@@ -1,71 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="/assets/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
-  <title>eWall</title>
-  <link rel="stylesheet" type="text/css" href="/assets/custom.css" />
-  <link rel="stylesheet" type="text/css" href="/assets/demo.css" />
 
-  <link type="text/css" rel="stylesheet" href="/assets/slicebox.css" />
-  <script type="text/javascript" src="/assets/modernizr.min.js"></script>
-  <script type="text/javascript" src="/assets/jquery.slicebox.js"></script>
-</head>
-<body>
   <div class="wrapper">
 
     <ul id="sb-slider" class="sb-slider">
       <li>
-        <a href="http://www.flickr.com/photos/strupler/2969141180" target="_blank"><img src="/assets/1.jpg" alt="image1"/></a>
+        <a href="#" target="_blank">
+          <img src="/assets/1.jpg" alt="image1"/>
+        </a>
         <div class="sb-description">
           <h3>Creative Lifesaver</h3>
         </div>
       </li>
       <li>
-        <a href="http://www.flickr.com/photos/strupler/2968268187" target="_blank"><img src="/assets/2.jpg" alt="image2"/></a>
+        <a href="#" target="_blank"><img src="/assets/2.jpg" alt="image2"/></a>
         <div class="sb-description">
           <h3>Honest Entertainer</h3>
         </div>
       </li>
       <li>
-        <a href="http://www.flickr.com/photos/strupler/2968114825" target="_blank"><img src="/assets/3.jpg" alt="image1"/></a>
+        <a href="#" target="_blank"><img src="/assets/3.jpg" alt="image1"/></a>
         <div class="sb-description">
           <h3>Brave Astronaut</h3>
         </div>
       </li>
       <li>
-        <a href="http://www.flickr.com/photos/strupler/2968122059" target="_blank"><img src="/assets/4.jpg" alt="image1"/></a>
+        <a href="#" target="_blank"><img src="/assets/4.jpg" alt="image1"/></a>
         <div class="sb-description">
           <h3>Affectionate Decision Maker</h3>
         </div>
       </li>
       <li>
-        <a href="http://www.flickr.com/photos/strupler/2969119944" target="_blank"><img src="/assets/5.jpg" alt="image1"/></a>
+        <a href="#" target="_blank"><img src="/assets/5.jpg" alt="image1"/></a>
         <div class="sb-description">
           <h3>Faithful Investor</h3>
         </div>
       </li>
       <li>
-        <a href="http://www.flickr.com/photos/strupler/2968126177" target="_blank"><img src="/assets/6.jpg" alt="image1"/></a>
+        <a href="#" target="_blank"><img src="/assets/6.jpg" alt="image1"/></a>
         <div class="sb-description">
           <h3>Groundbreaking Artist</h3>
         </div>
       </li>
-      <li>
-        <a href="http://www.flickr.com/photos/strupler/2968945158" target="_blank"><img src="/assets/7.jpg" alt="image1"/></a>
-        <div class="sb-description">
-          <h3>Selfless Philantropist</h3>
-        </div>
-      </li>
+
     </ul>
 
     <div id="shadow" class="shadow"></div>
-
     <div id="nav-arrows" class="nav-arrows">
       <a href="#">Next</a>
       <a href="#">Previous</a>
     </div>
-
     <div id="nav-dots" class="nav-dots">
       <span class="nav-dot-current"></span>
       <span></span>
@@ -77,31 +59,29 @@
     </div>
 
   </div>
+  <div class="row contents">
+    <div class="col-md-4 ">
+      <div class="new_group">
 
-  <!-- <script type="text/javascript">
-var $slicebox; $(function() {
-    $slicebox = $('#sb-slider').slicebox({
-        interval:6000,
-        orientation : "r", //表示幻灯片的切换方向，可取 (v)垂直方向, (h)水平方向 or (r)随机方向
-        perspective : 800, //透视点距离，可以通过改变其值查看效果
-        cuboidsCount : 5, //幻灯片横向或纵向被切割的块数，切割的每一块将会以3D的形式切换
-        cuboidsRandom : true, //是否随机 cuboidsCount 参数的值
-        maxCuboidsCount : 5, //设置一个值用来规定最大的 cuboidsCount 值
-        colorHiddenSides : "#333", //隐藏的幻灯片的颜色
-        sequentialFactor : 150, //幻灯片切换时间（毫秒数）
-        speed : 600, //每一块3D立方体的速度
-        autoplay : true, //是否自动开始切换
-        onBeforeChange : function(position) { return false; },
-        onAfterChange : function(position) { return false; }
-    });
-});
-</script> -->
+      </div>
+    </div>
+    <div class="col-md-4 ">
+      <div class="new_member">
+
+      </div>
+
+    </div>
+    <div class="col-md-4 ">
+      <div class="new_comment">
+
+      </div>
+
+    </div>
+  </div>
 
 <script type="text/javascript">
   $(function() {
-
     var Page = (function() {
-
       var $navArrows = $( '#nav-arrows' ).hide(),
         $navDots = $( '#nav-dots' ).hide(),
         $nav = $navDots.children( 'span' ),
@@ -112,68 +92,43 @@ var $slicebox; $(function() {
           autoplay: true,
 
           onReady : function() {
-
             $navArrows.show();
             $navDots.show();
             $shadow.show();
-
           },
           onBeforeChange : function( pos ) {
-
             $nav.removeClass( 'nav-dot-current' );
             $nav.eq( pos ).addClass( 'nav-dot-current' );
-
           }
         } ),
-
         init = function() {
-
           initEvents();
-
         },
         initEvents = function() {
-
           // add navigation events
           $navArrows.children( ':first' ).on( 'click', function() {
-
             slicebox.next();
             return false;
-
           } );
-
           $navArrows.children( ':last' ).on( 'click', function() {
-
             slicebox.previous();
             return false;
-
           } );
 
           $nav.each( function( i ) {
-
             $( this ).on( 'click', function( event ) {
-
               var $dot = $( this );
-
               if( !slicebox.isActive() ) {
-
                 $nav.removeClass( 'nav-dot-current' );
                 $dot.addClass( 'nav-dot-current' );
-
               }
-
               slicebox.jump( i + 1 );
               return false;
-
             } );
-
           } );
-
         };
-
         return { init : init };
-
     })();
-
     Page.init();
 
   });

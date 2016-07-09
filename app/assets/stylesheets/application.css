@@ -16,9 +16,11 @@
 
  */
 body {
-  background-color: #fff;
+  background-color:#fff;
 }
-
+.navbar{
+  margin-top: 30px;
+}
 .panel-default {
   opacity: 0.9;
 }
@@ -43,4 +45,20 @@ body {
   bottom: 10vh;
   position: fixed;
 
+}
+.contents{
+  background: #fff;
+}
+.new_group,.new_member, .new_comment{
+  position: relative;
+  margin: 35px;
+  margin-bottom: 25px;
+  border-radius: 5px;
+  border: 2px solid #000;
+  height: 15vh;
+  min-height: 15em;
+
+}
+.panel-body.g_g{
+  background: #424f32;
 }
