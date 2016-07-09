@@ -1,3 +1,41 @@
+<script type="text/javascript">
+	$(function () {
+		$userStack = $( "#userStack" );
+		$(".gallery").draggable();
+		$( "#userStack" ).droppable({
+			activeClass: "ui-state-highlight",
+      drop: function( event, ui ) {
+				saveToStack(ui.draggable)
+        $( this )
+            .html( "Dropped!" );
+						console.log(ui);
+      }
+    });
+
+
+
+		var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+		function saveToStack( $item ) {
+			$item.fadeOut(function() {
+				var $list = $( "ul", $userStack ).length ?
+					$( "ul", $userStack ) :
+					$( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $userStack );
+					console.log($list);
+
+				$item.find( "a.ui-icon-trash" ).remove();
+				$item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
+					$item
+						// .animate({ width: "48px" })
+						// .find( "img" )
+						// 	.animate({ height: "36px" });
+				});
+			});
+		}
+
+	});
+</script>
+
+
 <p id="notice"><%= notice %></p>
 
 <div class="container pages">
@@ -20,18 +58,29 @@
 							</div>
 						</div>
 					</div>
+
+
 					<div class="panel-body">
 						<div class="row">
               <% @photos.each do |photo| %>
                 <% photo.image.each do |img|%>
-									<div class="col-md-5">
+									<div class="col-md-3 gallery" >
                   <%= link_to image_tag(img.url, class: "photo_list"), photo %>
+							   	</div>
                 <% end %>
 							<% end %>
-						</div>
+					  </div>
+				  </div>
+
+
+
+
+					<div class="panel-body" id="userStack">
+						<ul>
+						</ul>
 					</div>
-				</div>
-			</div>
-		</section>
-	</div>
+		   </div>
+		 </div>
+	 </section>
+ </div>
 </div>
