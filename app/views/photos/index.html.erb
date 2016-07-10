@@ -38,7 +38,7 @@
     height: 15vh;
     min-height: 8em;
 
-		bottom: -10vh;
+		bottom: -15vh;
     background: #000;
     position: fixed;
   }
@@ -59,7 +59,27 @@
       revert: "invalid", // when not dropped, the item will revert back to its initial position
       containment: "document",
       helper: "clone",
-      cursor: "move"
+      cursor: "move",
+			stop: function (event, ui) {
+				console.log(ui.helper);
+				var rexg=/(\/uploads(\/\w+)+.\w+)/;
+				var imgsrc = ((ui.helper)[0].innerHTML).match(rexg);
+				var new_img_url = imgsrc[0];
+				var new_user_id = "<%= @current_user.id%>";
+				var stack = {
+					img_url: new_img_url,
+					user_id: new_user_id
+				};
+				console.log(stack);
+				$.ajax({
+					url: "/stacks",
+					type: "POST",
+					data: stack
+
+				}).done(function (data) {
+					console.log(data);
+				});
+			}
     });
 
 
@@ -101,7 +121,9 @@
         });
       });
     $( "li", $group_gallery ).draggable();
+
     }
+
     var transfer_icon = "<a href='link/to/move' title='Delete this image' class='ui-icon ui-icon-arrowthickstop-1-s'>Delete image</a>";
     function recycleImage( $item ) {
       $item.fadeOut(function() {
@@ -202,13 +224,13 @@
   $("#transfer").mouseover(function(){
 		$(this).css({
 			"bottom": "0",
-			"-webkit-transition": "bottom 2s"
+			"-webkit-transition": "bottom 1s"
 		});
 	});
 	$("#transfer").mouseout(function () {
 		window.setTimeout(function () {
 			$("#transfer").css({
-				"bottom": "-10vh"
+				"bottom": "-15vh"
 			});
 		}, 10000);
 	});

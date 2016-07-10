@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root :to => "home#index"
   resources :photos
+  resources :stacks
   resources :groups do
     patch '/join' => 'groups#join', on: :member
     get 'photos' => 'groups#photos', on: :member
@@ -10,4 +11,5 @@ Rails.application.routes.draw do
   get '/login' => 'session#new', :as => 'login'
   post '/login' => 'session#create'
   delete '/logout' => 'session#destroy', :as => 'logout'
+
 end
