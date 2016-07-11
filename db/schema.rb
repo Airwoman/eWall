@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160710150143) do
+ActiveRecord::Schema.define(version: 20160711144051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,14 +22,6 @@ ActiveRecord::Schema.define(version: 20160710150143) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  create_table "groups_photos", id: false, force: :cascade do |t|
-    t.integer "group_id", null: false
-    t.integer "photo_id", null: false
-  end
-
-  add_index "groups_photos", ["group_id", "photo_id"], name: "index_groups_photos_on_group_id_and_photo_id", using: :btree
-  add_index "groups_photos", ["photo_id", "group_id"], name: "index_groups_photos_on_photo_id_and_group_id", using: :btree
 
   create_table "groups_users", id: false, force: :cascade do |t|
     t.integer "group_id", null: false
@@ -42,10 +34,13 @@ ActiveRecord::Schema.define(version: 20160710150143) do
   create_table "photos", force: :cascade do |t|
     t.text     "description"
     t.integer  "uploader_id"
-    t.json     "image"
+    t.string   "image"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "group_id"
   end
+
+  add_index "photos", ["group_id"], name: "index_photos_on_group_id", using: :btree
 
   create_table "photos_users", id: false, force: :cascade do |t|
     t.integer "photo_id", null: false
@@ -73,4 +68,5 @@ ActiveRecord::Schema.define(version: 20160710150143) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "photos", "groups"
 end

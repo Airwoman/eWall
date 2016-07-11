@@ -18,7 +18,6 @@ class PhotosController < ApplicationController
   # GET /photos/new
   def new
     @photo = Photo.new
-    @groups = Group.all
   end
 
   # GET /photos/1/edit
@@ -29,23 +28,33 @@ class PhotosController < ApplicationController
   # POST /photos
   # POST /photos.json
   def create
-    @groups = Group.all
-    @photo = Photo.new(photo_params)
+    group =
+    # @groups = Group.all
+    # images = params['images']
+    # photo = Photo.new photo_params
+    # photo.image = params[:photo][:image]
+    # group = @groups.find_by(name: params['group'])
+    # photo.groups << group
+    # photo.uploader_id = @current_user.id
+    #
+    # photo.save
 
-    group = @groups.find_by(name: params['group'])
-    @photo.groups << group
-    @photo.uploader_id = @current_user.id
+    # images.each do |img|
+    #   photo = Photo.new description: photo_params[:description],
+    #     uploader_id: photo_params[:uploader_id],
+    #     image: img
+    #     # uploader = ImageUploader.new
+    #     # uploader.store!(img)
+    #     group = Group.find_by_name(params['group'])
+    #     photo.groups << group
+    #     photo.uploader_id = @current_user.id
+    #   photo.save
+    # end
+    redirect_to photos_path, notice: 'Photo was successfully created.'
 
 
-    respond_to do |format|
-      if @photo.save
-        format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
-        format.json { render :show, status: :created, location: @photo }
-      else
-        format.html { render :new }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
-      end
-    end
+
+
   end
 
   # PATCH/PUT /photos/1
@@ -83,6 +92,6 @@ class PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:description, :uploader_id, {image: []})
+      params.require(:photo).permit(:description, :uploader_id)
     end
 end
