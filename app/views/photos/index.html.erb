@@ -61,20 +61,21 @@
       helper: "clone",
       cursor: "move",
 			stop: function (event, ui) {
+				console.log(ui.helper);
 				var rexg=/(\/uploads(\/\w+)+.\w+)/;
 				var imgsrc = ((ui.helper)[0].innerHTML).match(rexg);
 				var new_img_url = imgsrc[0];
 				var new_user_id = "<%= @current_user.id%>";
 				var stack = {
-          stack: {
-  					img_url: new_img_url,
-  					user_id: new_user_id
-          }
+					img_url: new_img_url,
+					user_id: new_user_id
 				};
+				console.log(stack);
 				$.ajax({
-					url: "/stacks.json",
+					url: "/stacks",
 					type: "POST",
 					data: stack
+
 				}).done(function (data) {
 					console.log(data);
 				});
@@ -206,9 +207,6 @@
 					<%= link_to image_tag(img.url, class: "photo_list"), photo %>
 			    <a href="/assets/1.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
 			    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-arrowthickstop-1-s">Delete image</a>
-          
-          <a href="like"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-
 			  </li>
 
 		<% end %>

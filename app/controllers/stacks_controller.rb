@@ -3,7 +3,6 @@ class StacksController < ApplicationController
 
   before_action :set_stack, only: [:show, :destroy]
 
-
   def new
     @stack = Stack.new
     respond_to do |format|
@@ -13,23 +12,25 @@ class StacksController < ApplicationController
   end
 
   def show
-    # render json: @stack
+
   end
 
   def create
     @stack = Stack.new(stack_params)
 
-    if @stack.save
-      render json: @stack.to_json
-    else
-      render json: @stack.errors, status: :unprocessable_entity
+    respond_to do |format|
+      if @stack.save
+        format.html { redirect_to @stack, notice: 'Stack was successfully created.' }
+        format.json { render :show, status: :created, location: @stack }
+      else
+        format.html { render :new }
+        format.json { render json: @stack.errors, status: :unprocessable_entity }
+      end
     end
-
   end
 
   def destroy
-    @stack.destroy
-    render json: @stack.to_json
+
   end
 
   private

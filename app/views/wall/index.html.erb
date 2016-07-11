@@ -70,18 +70,6 @@
       activeClass: "ui-state-highlight",
       drop: function( event, ui ) {
         deleteImage( ui.draggable );
-        var rexg=/(\/uploads(\/\w+)+.\w+)/;
-				var imgsrc = ((ui.draggable)[0].innerHTML).match(rexg);
-        var imgid = parseInt((ui.draggable)[0].id);
-				var new_img_url = imgsrc[0];
-        console.log(imgid);
-        console.log(new_img_url);
-        $.ajax({
-					url: "/stacks/"+imgid,
-					type: "DELETE"
-				}).done(function (data) {
-					console.log(data);
-				});
       }
     });
 
@@ -94,6 +82,24 @@
       }
     });
 
+    // image deletion function
+    // var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+    // function deleteImage( $item ) {
+    //   $item.fadeOut(function() {
+    //     var $list = $( "ul", $transfer ).length ?
+    //       $( "ul", $transfer ) :
+    //       $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $transfer );
+    //
+    //     $item.find( "a.ui-icon-circle-arrow-n" ).remove();
+    //     $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
+    //       $item
+    //         .animate({ width: "48px" })
+    //         .find( "img" )
+    //           .animate({ height: "100%" });
+    //     });
+    //   });
+    // $( "li", $gallery ).draggable();
+    // }
 
     function deleteImage($item) {
       var $li = $("<li></li>");
@@ -175,13 +181,26 @@
 <div class="ui-widget ui-helper-clearfix">
 
 <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
-  <% @stacks.each do |stack|%>
-  <li class="ui-widget-content ui-corner-tr" id="<%= stack.id%>">
-    <%= image_tag(stack.img_url, class: "img-circle img-responsive")%>
-    <%= link_to 'View larger', stack.img_url, class: "ui-icon ui-icon-zoomin"%>
-    <%= link_to 'Delete image', 'link/to/move', class:"ui-icon ui-icon-circle-arrow-n"%>
+  <li class="ui-widget-content ui-corner-tr">
+    <img src="/assets/1.jpg" alt="The peaks of High Tatras" width="96" height="72">
+    <a href="/assets/1.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-circle-arrow-n">Delete image</a>
   </li>
-  <% end %>
+  <li class="ui-widget-content ui-corner-tr">
+    <img src="/assets/2.jpg" alt="The chalet at the Green mountain lake" width="96" height="72">
+    <a href="/assets/2.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-circle-arrow-n">Delete image</a>
+  </li>
+  <li class="ui-widget-content ui-corner-tr">
+    <img src="/assets/3.jpg" alt="Planning the ascent" width="96" height="72">
+    <a href="/assets/3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-circle-arrow-n">Delete image</a>
+  </li>
+  <li class="ui-widget-content ui-corner-tr">
+    <img src="/assets/4.jpg" alt="On top of Kozi kopka" width="96" height="72">
+    <a href="/assets/4.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+    <a href="link/to/move" title="Delete this image" class="ui-icon ui-icon-circle-arrow-n">Delete image</a>
+  </li>
 </ul>
 
 
