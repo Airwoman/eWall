@@ -12,7 +12,6 @@ class PhotosController < ApplicationController
   def show
     user=User.all
     @uploader = user.find(@photo.uploader_id)
-
   end
 
   # GET /photos/new
@@ -22,13 +21,21 @@ class PhotosController < ApplicationController
 
   # GET /photos/1/edit
   def edit
-    @groups = Group.all
   end
 
   # POST /photos
   # POST /photos.json
   def create
-    group =
+    images = params['images']
+    binding.pry
+
+    images.each do |image|
+      puts '-----------------'
+      puts "image: #{image}"
+      photo = Photo.new photo_params
+      photo.image = image
+      photo.save
+    end
     # @groups = Group.all
     # images = params['images']
     # photo = Photo.new photo_params
@@ -92,6 +99,6 @@ class PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:description, :uploader_id)
+      params.require(:photo).permit(:description, :uploader_id, :group_id)
     end
 end
