@@ -27,40 +27,12 @@ class PhotosController < ApplicationController
   # POST /photos.json
   def create
     images = params['images']
-    binding.pry
-
     images.each do |image|
-      puts '-----------------'
-      puts "image: #{image}"
       photo = Photo.new photo_params
       photo.image = image
       photo.save
     end
-    # @groups = Group.all
-    # images = params['images']
-    # photo = Photo.new photo_params
-    # photo.image = params[:photo][:image]
-    # group = @groups.find_by(name: params['group'])
-    # photo.groups << group
-    # photo.uploader_id = @current_user.id
-    #
-    # photo.save
-
-    # images.each do |img|
-    #   photo = Photo.new description: photo_params[:description],
-    #     uploader_id: photo_params[:uploader_id],
-    #     image: img
-    #     # uploader = ImageUploader.new
-    #     # uploader.store!(img)
-    #     group = Group.find_by_name(params['group'])
-    #     photo.groups << group
-    #     photo.uploader_id = @current_user.id
-    #   photo.save
-    # end
     redirect_to photos_path, notice: 'Photo was successfully created.'
-
-
-
 
   end
 
