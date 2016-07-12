@@ -30,6 +30,7 @@ class PhotosController < ApplicationController
     images.each do |image|
       photo = Photo.new photo_params
       photo.image = image
+      photo.uploader_id = @current_user.id
       photo.save
     end
     redirect_to photos_path, notice: 'Photo was successfully created.'
@@ -39,11 +40,21 @@ class PhotosController < ApplicationController
   # PATCH/PUT /photos/1
   # PATCH/PUT /photos/1.json
   def update
-    respond_to do |format|
-      @photo.attributes = photo_params
-      @photo.image = @photo.image_was + photo_params['image']
+    # respond_to do |format|
+    #   @photo.attributes = photo_params
+    #   @photo.image = @photo.image_was + photo_params['image']
+    #
+    #   if @photo.save
+    #     format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
+    #     format.json { render :show, status: :ok, location: @photo }
+    #   else
+    #     format.html { render :edit }
+    #     format.json { render json: @photo.errors, status: :unprocessable_entity }
+    #   end
+    # end
 
-      if @photo.save
+    respond_to do |format|
+      if @photo.update(photo_params)
         format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
         format.json { render :show, status: :ok, location: @photo }
       else
@@ -57,13 +68,7 @@ class PhotosController < ApplicationController
   # DELETE /photos/1.json
   def destroy
     @photo.destroy
-    respond_to do |format|
-      format.html {
-        redirect_to photos_url, notice: 'Photo was successfully destroyed.' }
-      format.json {
-        render :json => {}
-      }
-    end
+    render json: 'ok', status: :ok
   end
 
   def like
@@ -75,9 +80,6 @@ class PhotosController < ApplicationController
     render json: 'ok', status: :ok
   end
 
-  def unlike
-
-  end
 
   private
   # Use callbacks to share common setup or constraints between actions.
@@ -87,6 +89,6 @@ class PhotosController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def photo_params
-    params.require(:photo).permit(:description, :uploader_id, :group_id)
+    params.require(:photo).permit(:description, :group_id)
   end
 end

@@ -22,18 +22,16 @@
 				<li class="ui-widget-content ui-corner-tr">
           <div class="imagewrap">
             <%= link_to image_tag(photo.image_url, class: "photo_list"), photo %>
-            <input type="image" id="<%= photo.id%>" src="/assets/cross.png" class="delete">
+						<%= link_to photo_path(photo), class: "delete", method: :delete, remote: true do %>
+							<i class="fa fa-times" aria-hidden="true"></i>
+						<% end %>
           </div>
-          <a href="link/to/delete" title="delete image" class="ui-icon ui-icon-closethick">Delete</a>
 			    <a href="/assets/1.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
 			    <a href="link/to/move" title="Move this image" class="ui-icon ui-icon-arrowthickstop-1-s">Move image</a>
-          <%= link_to like_photo_path(photo), method: :post, remote: true do %>
+					<%= link_to like_photo_path(photo), method: :post, remote: true do %>
             <i class="fa like-button <%= photo.likes.include?(@current_user) ? 'fa-heart' : 'fa-heart-o' %>" aria-hidden="true"></i>
           <%end %>
-          <!-- <a href="" class="like" id = "<%= photo.id%>">
-            <i class="fa fa-heart-o" aria-hidden="true"></i><%= photo.likes.count%>
-          </a> -->
-
+					<div class="totalLikes"><%= photo.likes.count%></div>
 
           <!-- <a href="#" class="comments" id = "<%= photo.id%>"><i class="fa fa-comments" aria-hidden="true"></i></a> -->
 			  </li>
@@ -71,8 +69,19 @@ $(document).ready(function(){
  $('.like-button').click(function() {
 		$(this).toggleClass('fa-heart');
 		$(this).toggleClass('fa-heart-o');
+		var likes = parseInt($(this).parent().next('.totalLikes').text());
+		if ($(this).hasClass("fa-heart-o")) {
+			$(this).parent().next('.totalLikes').text(likes-1);
+		} else {
+			$(this).parent().next('.totalLikes').text(likes+1);
+		}
  });
+
+ $('.delete').click(function() {
+	 $(this).closest('li').remove();
+ })
 });
+
 
 $(function() {
   var $group_gallery = $( "#group_gallery" ),
@@ -136,7 +145,7 @@ $(function() {
         $item
           .animate({ width: "48px" })
           .find( "img" )
-          .animate({ height: "36px" });
+          	.animate({ height: "36px" });
       });
     });
   $( "li", $group_gallery ).draggable();
@@ -153,7 +162,7 @@ $(function() {
         .css( "width", "96px")
         .append( transfer_icon )
         .find( "img" )
-          .css( "height", "72px" )
+        	.css( "height", "72px" )
         .end()
         .appendTo( $group_gallery )
         .fadeIn();
@@ -192,51 +201,10 @@ $(function() {
       viewLargerImage( $target );
     } else if ( $target.is( "a.ui-icon-refresh" ) ) {
       recycleImage( $item );
-    } else if ( $target.is( "a.ui-icon-closethick" ) ) {
-      DeleteImage( $item );
     }
 
     return false;
   });
-
-
-
-  //
-  // function DeleteImage( $item ) {
-  //   console.log($item);
-  //   var photo_id = parseInt(this.id);
-  //
-  //   console.log(photo_id);
-  //   $.ajax({
-  //     url: "/photos/"+photo_id+".json",
-  //     type: "DELETE"
-  //   }).done(function () {
-  //     $item.find( "a.ui-icon-arrowthickstop-1-s" ).remove();
-  //   }).fail(function() {
-  //     console.log("fail");
-  //   });
-
-
-
-      // $item.find( "a.ui-icon-arrowthickstop-1-s" ).remove();
-
-
-  // }
-
-  // $(".delete").on("click", function ($item) {
-  //   var photo_id = parseInt(this.id);
-  //
-  //   console.log($item);
-  //   $.ajax({
-  //     url: "/photos/"+photo_id+".json",
-  //     type: "DELETE"
-  //   }).done(function () {
-  //     $item.find( "a.ui-icon-arrowthickstop-1-s" ).remove();
-  //   }).fail(function() {
-  //     console.log("fail");
-  //   });
-  // });
-
-
 });
+
 </script>

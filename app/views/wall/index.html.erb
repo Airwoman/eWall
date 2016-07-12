@@ -92,6 +92,7 @@
       drop: function( event, ui ) {
         recycleImage( ui.draggable );
       }
+
     });
 
 
@@ -102,7 +103,8 @@
       $item.find("img").appendTo ($li).appendTo ($pic);
       $item.remove();
       $("img",$transfer).resizable({
-        autoHide:true
+        autoHide:true,
+        aspectRatio: true
       });
       $("div",$transfer).draggable({
         stack: 'div'

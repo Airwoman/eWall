@@ -15,11 +15,9 @@
                 <tbody>
                   <tr>
                     <td><strong>Image : </strong></td>
-                    <% @photo.image.each do |img|%>
                     <td>
-                    <%= image_tag(img.url) %>
+                    <%= image_tag(@photo.image) %>
                     </td>
-                    <% end %>
                   </tr>
                   <tr>
                     <td><strong>Uploader : </strong></td>
