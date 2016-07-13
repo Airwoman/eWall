@@ -38,6 +38,6 @@ class StacksController < ApplicationController
     end
 
     def stack_params
-      params.require(:stack).permit(:img_url, :user_id)
+      params.require(:stack).permit(:photo_id, :user_id)
     end
 end

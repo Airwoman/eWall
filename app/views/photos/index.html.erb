@@ -19,7 +19,7 @@
 
 <ul id="group_gallery" class="group_gallery ui-helper-reset ui-helper-clearfix">
 	<% @photos.each do |photo| %>
-				<li class="ui-widget-content ui-corner-tr">
+				<li class="ui-widget-content ui-corner-tr" id="photo-id-<%= photo.id %>">
           <div class="imagewrap">
             <%= link_to image_tag(photo.image_url, class: "photo_list"), photo %>
 						<%= link_to photo_path(photo), class: "delete", method: :delete, remote: true do %>
@@ -95,22 +95,24 @@ $(function() {
     helper: "clone",
     cursor: "move",
 		stop: function (event, ui) {
-			var rexg=/(\/uploads(\/\w+)+.\w+)/;
-			var imgsrc = ((ui.helper)[0].innerHTML).match(rexg);
-			var new_img_url = imgsrc[0];
+
+			var temid = ui.helper.prevObject.attr('id');
+			var regx = /\d+/;
+			var photoid = temid.match(regx);
 			var new_user_id = "<%= @current_user.id%>";
 			var stack = { // save the data to transfer stack
         stack: {
-					img_url: new_img_url,
+					photo_id: photoid[0],
 					user_id: new_user_id
         }
 			};
+			console.log(stack);
 			$.ajax({
 				url: "/stacks.json",
 				type: "POST",
 				data: stack
 			}).done(function (data) {
-				console.log(data);
+				// console.log(data);
 			});
 		}
   });
@@ -121,6 +123,12 @@ $(function() {
     activeClass: "ui-state-highlight",
     drop: function( event, ui ) {
       MoveImageToTransfer( ui.draggable );
+			var temid = ui.draggable.attr('id');
+			var regx = /\d+/;
+			var photoid = temid.match(regx);
+
+			console.log(photoid[0]);
+
     }
   });
 
