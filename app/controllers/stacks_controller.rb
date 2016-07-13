@@ -3,7 +3,6 @@ class StacksController < ApplicationController
 
   before_action :set_stack, only: [:show, :destroy]
 
-
   def new
     @stack = Stack.new
     respond_to do |format|

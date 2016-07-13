@@ -5,12 +5,13 @@ Rails.application.routes.draw do
   end
 
   resources :stacks
+  resources :ewalls
   resources :groups do
     patch '/join' => 'groups#join', on: :member
     get 'photos' => 'groups#photos', on: :member
   end
   resources :users
-  get '/users/:id/wall' => "users#wall", :as => 'ewall'
+  get '/users/:id/wall' => "users#wall", :as => 'wall'
   # get '/wall' => 'wall#index', :as => 'ewall'
   get '/login' => 'session#new', :as => 'login'
   post '/login' => 'session#create'
