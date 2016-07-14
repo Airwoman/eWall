@@ -11,7 +11,7 @@
 
 <style media="screen">
 
-#gallery {
+#transfer {
   float: left;
   width:100vw;
   height: 10vh;
@@ -21,20 +21,20 @@
   background: #000;
   position: fixed;
 }
-.gallery.custom-state-active { background: #999; }
-.gallery li {
+.transfer.custom-state-active { background: #999; }
+.transfer li {
   float: left;
   width: 96px;
   padding: 0.4em;
   margin: 0 0.4em 0.4em 0;
   text-align: center;
 }
-.gallery li h5 { margin: 0 0 0.4em; cursor: move; }
-.gallery li a { float: right; }
-.gallery li a.ui-icon-zoomin { float: left; }
-.gallery li img { width: 100%; height: 100%; cursor: move; }
+.transfer li h5 { margin: 0 0 0.4em; cursor: move; }
+.transfer li a { float: right; }
+.transfer li a.ui-icon-zoomin { float: left; }
+.transfer li img { width: 100%; height: 100%; cursor: move; }
 
-#transfer {
+#pictureWall {
   margin: 0;
   float: right;
   width: 100%;
@@ -42,22 +42,37 @@
   min-height: 20em;
   background: #424f32;
 }
-#transfer h4 .ui-icon { float: left; }
-#transfer .gallery h5 { display: none; }
+#pictureWall h4 .ui-icon { float: left; }
+#pictureWall .transfer h5 { display: none; }
 
 </style>
 
 
 </head>
 <body>
-  <div id="transfer" class="ui-widget-content ui-state-default">
+  <div class="savechange">
+    <input type="button" name="name" value="save" id="saveall">
+  </div>
+  <% if @current_user.ewalls.count == 0 %>
+  <div id="pictureWall" class="ui-widget-content ui-state-default">
     <ul id="pics">
 
     </ul>
   </div>
+  <% else %>
+  <div id="pictureWall" class="ui-widget-content ui-state-default">
+    <ul id="pics">
+      <%= @current_user.ewalls.each do|ewall|%>
+      <li><%= ewall.ewall_photo.image%></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+
 <div class="ui-widget ui-helper-clearfix">
 
-<ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+<ul id="transfer" class="transfer ui-helper-reset ui-helper-clearfix">
   <% @current_user.stacks.each do |stack|%>
   <li class="ui-widget-content ui-corner-tr" id="<%= stack.id%>">
     <%= image_tag(stack.temp_photo.image, class: "img-circle img-responsive")%>
@@ -74,16 +89,82 @@
 
 
 <script>
+
+
+
 $(document).ready(function(){
- $("#gallery").mouseover(function(){
+
+
+  function getPosition(el) {
+  var xPos = 0;
+  var yPos = 0;
+
+  while (el) {
+    if (el.tagName == "BODY") {
+      // deal with browser quirks with body/window/document and page scroll
+      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+      var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+      xPos += (el.offsetLeft - xScroll + el.clientLeft);
+      yPos += (el.offsetTop - yScroll + el.clientTop);
+    } else {
+      // for all other non-BODY elements
+      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+    }
+
+    el = el.offsetParent;
+  }
+  return {
+    x: xPos,
+    y: yPos
+  };
+}
+
+// deal with the page getting resized or scrolled
+window.addEventListener("scroll", updatePosition, false);
+window.addEventListener("resize", updatePosition, false);
+
+function updatePosition() {
+  // add your code to update the position when your browser
+  // is resized or scrolled
+}
+
+
+  $("#saveall").click(function () {
+    var myElements = document.querySelectorAll("#pictureWall img");
+
+    for (var i = 0; i < myElements.length; i++) {
+      var position = getPosition(myElements[i]);
+      var ewallphotoid = myElements[i].id;
+      var ewallid = myElements[i].className;
+      var regx = /\d+/;
+      var ewall_id = ewallid.match(regx);
+
+      var ewallData = {
+        ewall:{
+          position_x: position.x,
+          position_y: position.y
+        }
+      };
+      $.ajax({
+        url: "/ewalls/"+parseInt(ewall_id[0]),
+        type: "PATCH",
+        data: ewallData
+      });
+    }
+  });
+
+
+ $("#transfer").mouseover(function(){
    $(this).css({
      "bottom": "0",
      "-webkit-transition": "bottom 1s"
    });
  });
- $("#gallery").mouseout(function () {
+ $("#transfer").mouseout(function () {
    window.setTimeout(function () {
-     $("#gallery").css({
+     $("#transfer").css({
        "bottom": "-15vh"
      });
    }, 10000);
@@ -95,13 +176,17 @@ $(document).ready(function(){
 
 
 
-$(function() {
-  // there's the gallery and the transfer
-  var $gallery = $( "#gallery" ),
-    $transfer = $( "#transfer" );
 
-  // let the gallery items be draggable
-  $( "li", $gallery ).draggable({
+
+
+
+$(function() {
+  // there's the transfer and the pictureWall
+  var $transfer = $( "#transfer" ),
+    $pictureWall = $( "#pictureWall" );
+
+  // let the transfer items be draggable
+  $( "li", $transfer ).draggable({
     cancel: "a.ui-icon", // clicking an icon won't initiate dragging
     revert: "invalid", // when not dropped, the item will revert back to its initial position
     containment: "document",
@@ -110,15 +195,17 @@ $(function() {
   });
 
 
-  // let the transfer be droppable, accepting the gallery items
-  $( "li", $gallery ).resizable({
+  // let the pictureWall be droppable, accepting the transfer items
+  $( "li", $transfer ).resizable({
     autoHide:true
   });
-  $transfer.droppable({
-    accept: "#gallery > li",
+  $pictureWall.droppable({
+    accept: "#transfer > li",
     activeClass: "ui-state-highlight",
     drop: function( event, ui ) {
-      deleteImage( ui.draggable );
+      var $item =ui.draggable;
+      $item.remove();
+      // deleteImage( ui.draggable );
       stack_id = ui.draggable.attr('id');
       $.ajax({
         url: "/stacks/"+stack_id,
@@ -137,15 +224,33 @@ $(function() {
           type: "POST",
           data: ewall
         }).done(function (data) {
+          var $li = $("<li></li>");
+          var $pic = $("#pics");
+          var $img = $("<img>");
+
+          $img.attr({
+            "src": data.ewall_photo.image.url,
+            "width": "50",
+            "class": "photo"+data.id,
+            "id": photoid,
+          }).appendTo ($li).appendTo ($pic);
+          $("img",$pictureWall).resizable({
+            autoHide:true,
+            aspectRatio: true
+          });
+          $("div",$pictureWall).draggable({
+            stack: 'div'
+          });
+
           console.log("bing..");
         });
       });
     }
   });
 
-  // let the gallery be droppable as well, accepting items from the transfer
-  $gallery.droppable({
-    accept: "#transfer li",
+  // let the transfer be droppable as well, accepting items from the pictureWall
+  $transfer.droppable({
+    accept: "#pictureWall li",
     activeClass: "custom-state-active",
     drop: function( event, ui ) {
       // console.log(event);
@@ -157,22 +262,11 @@ $(function() {
 
 
   function deleteImage($item) {
-    var $li = $("<li></li>");
-    var $pic = $("#pics");
-
-    $item.find("img").attr("width","50").appendTo ($li).appendTo ($pic);
     $item.remove();
-    $("img",$transfer).resizable({
-      autoHide:true,
-      aspectRatio: true
-    });
-    $("div",$transfer).draggable({
-      stack: 'div'
-    });
   }
 
   // image recycle function
-  var transfer_icon = "<a href='link/to/move' title='Delete this image' class='ui-icon ui-icon-circle-arrow-n'>Delete image</a>";
+  var pictureWall_icon = "<a href='link/to/move' title='Delete this image' class='ui-icon ui-icon-circle-arrow-n'>Delete image</a>";
   function recycleImage( $item ) {
     $item.fadeOut(function() {
       $item
@@ -180,11 +274,11 @@ $(function() {
           .remove()
         .end()
         .css( "width", "96px")
-        .append( transfer_icon )
+        .append( pictureWall_icon )
         .find( "img" )
           .css( "height", "72px" )
         .end()
-        .appendTo( $gallery )
+        .appendTo( $transfer )
         .fadeIn();
     });
   }
@@ -211,7 +305,7 @@ $(function() {
   }
 
   // resolve the icons behavior with event delegation
-  $( "ul.gallery > li" ).click(function( event ) {
+  $( "ul.transfer > li" ).click(function( event ) {
     var $item = $( this ),
       $target = $( event.target );
 

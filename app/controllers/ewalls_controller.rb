@@ -1,7 +1,7 @@
 class EwallsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_action :set_ewall, only: [:show, :destroy]
+  before_action :set_ewall, only: [:show, :update, :destroy]
 
   def new
     @ewall = Ewall.new
@@ -15,9 +15,22 @@ class EwallsController < ApplicationController
     @ewall = Ewall.new(ewall_params)
 
     if @ewall.save
-      render json: @ewall.to_json
+      render json: @ewall.as_json(include: [:ewall_photo])
+
     else
       render json: @ewall.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @ewall.update(ewall_params)
+        format.html { redirect_to @ewall, notice: 'Ewall was successfully saved.' }
+        format.json { render :show, status: :ok, location: @ewall }
+      else
+        format.html { render :edit }
+        format.json { render json: @ewall.errors, status: :unprocessable_entity }
+      end
     end
   end
 
