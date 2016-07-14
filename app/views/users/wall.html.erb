@@ -37,14 +37,13 @@
 </style>
 
 
-</head>
 <body>
   <div class="savechange">
     <p class="help-block"></p>
     <div class="col-md-3"></div>
     <div class="col-md-6 well well-sm">
       <span><%= @user.name %> 's e-PicWall</span>
-      <% if @current_user = @user %>
+      <% if @current_user == @user %>
       <input type="button" class="btn btn-success pull-right" name="name" value="SAVE" id="saveAll">
       <% end %>
     </div>
