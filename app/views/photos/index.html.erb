@@ -30,7 +30,6 @@
           </div>
 
 			    <a href="<%= photo.image%>" title="View larger image" class="fancybox pull-left"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
-			    <a href="link/to/move" title="Move this image" class="ui-icon ui-icon-arrowthickstop-1-s">Move image</a></br></br>
 					<div class="heart">
 						<%= link_to like_photo_path(photo), method: :post, remote: true do %>
 	            <i class="fa like-button <%= photo.likes.include?(@current_user) ? 'fa-heart' : 'fa-heart-o' %> " aria-hidden="true"></i>
@@ -179,7 +178,6 @@ $(function() {
           .remove()
         .end()
         .css( "width", "96px")
-        .append( transfer_icon )
         .find( "img" )
         	.css( "height", "72px" )
         .end()
