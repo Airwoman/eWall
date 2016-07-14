@@ -8,6 +8,17 @@ class ApplicationController < ActionController::Base
   def fetch_user
     @current_user = User.find_by(:id => session[:user_id])
     session[:user_id] = nil unless @current_user
+  end
 
+  def only_admin_action
+    if @current_user.role != 1
+      redirect_to(request.referer || root_path)
+    end
+  end
+
+  def only_owner_action
+    if @user != @current_user
+      redirect_to(request.referer || root_path)
+    end
   end
 end

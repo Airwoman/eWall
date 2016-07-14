@@ -40,7 +40,15 @@
 </head>
 <body>
   <div class="savechange">
-    <input type="button" name="name" value="save" id="saveall">
+    <p class="help-block"></p>
+    <div class="col-md-3"></div>
+    <div class="col-md-6 well well-sm">
+      
+
+      <input type="button" class="btn btn-secondary pull-right" name="name" value="save" id="saveAll">
+    </div>
+    <div class="col-md-3"></div>
+
   </div>
   <div id="pictureWall" >
     <ul id="pics">
@@ -107,7 +115,7 @@ $(document).ready(function(){
     // is resized or scrolled
   }
 
-  $("#saveall").click(function () {
+  $("#saveAll").click(function () {
     var myElements = document.querySelectorAll("#pictureWall img");
     for (var i = 0; i < myElements.length; i++) {
       debugger

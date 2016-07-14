@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :wall]
+  before_action :only_owner_action, only: [:show, :edit, :update]
+  before_action :only_admin, only: [:destroy]
 
   # GET /users
   # GET /users.json
@@ -63,8 +65,8 @@ class UsersController < ApplicationController
 
 
   def wall
-    @stacks = @current_user.stacks.where.not(temp_photo: nil)
-    @ewalls = @current_user.ewalls.where.not(position_x: nil)
+    @stacks = @user.stacks.where.not(temp_photo: nil)
+    @ewalls = @user.ewalls.where.not(position_x: nil)
 
     if @stacks.empty? && @ewalls.empty?
       redirect_to groups_path
