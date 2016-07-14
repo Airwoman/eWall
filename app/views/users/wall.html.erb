@@ -42,28 +42,20 @@
   <div class="savechange">
     <input type="button" name="name" value="save" id="saveall">
   </div>
-  <% if @current_user.ewalls.count == 0 && @current_user.ewalls%>
-  <div id="pictureWall" class="ui-widget-content ui-state-default">
+  <div id="pictureWall" >
     <ul id="pics">
-    </ul>
-  </div>
-  <% else %>
-  <div id="pictureWall" class="ui-widget-content ui-state-default">
-    <ul id="pics">
-      <% @current_user.ewalls.where.not(position_x: nil).each do|ewall|%>
+      <% @ewalls.each do|ewall|%>
         <img src="<%= ewall.ewall_photo.image.url%>" class="photo<%=ewall.id %>" id ="<%=ewall.photo_id%>" style= "position: absolute; width: 50px; height: 28.125px; top: <%= ewall.position_y.to_i%>px; left: <%= ewall.position_x.to_i %>px;">
       <% end %>
     </ul>
   </div>
-  <% end %>
-
 
 <div class="ui-widget ui-helper-clearfix">
 
 <ul id="transfer" class="transfer ui-helper-reset ui-helper-clearfix">
   <% @stacks.each do |stack|%>
   <li class="ui-widget-content ui-corner-tr" id="<%= stack.id%>">
-    <%= image_tag(stack.temp_photo.image, class: "img-circle img-responsive")%>
+    <%= image_tag(stack.temp_photo.image, class: "img-responsive")%>
     <%= link_to 'Delete image', 'link/to/move', class:"ui-icon ui-icon-circle-arrow-n"%>
   </li>
   <% end %>
@@ -117,7 +109,6 @@ $(document).ready(function(){
 
   $("#saveall").click(function () {
     var myElements = document.querySelectorAll("#pictureWall img");
-    debugger;
     for (var i = 0; i < myElements.length; i++) {
       var position = getPosition(myElements[i]);
       var ewallphotoid = myElements[i].id;
@@ -171,6 +162,13 @@ $(function() {
   });
 
 
+  $("img",$pictureWall).resizable({
+    autoHide:true,
+    aspectRatio: true
+  });
+  $("div",$pictureWall).draggable({
+    stack: 'div'
+  });
   // let the pictureWall be droppable, accepting the transfer items
   $( "li", $transfer ).resizable({
     autoHide:true

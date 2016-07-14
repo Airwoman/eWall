@@ -42,7 +42,7 @@
         <li><%= link_to "All users", users_path%></li>
         <li><%= link_to "Create Group", new_group_path%></li>
         <li><%= link_to "Group list", groups_path%></li>
-        <li><%= link_to "Photos", photos_path%></li>
+        <li><%= link_to "All Photos", photos_path%></li>
         <li><%= link_to "Create photo", new_photo_path%></li>
 
       </ul>
@@ -56,6 +56,7 @@
         <li><%= link_to "My E-wall", wall_path(@current_user.id)%></li>
         <li><%= link_to "Create Group", new_group_path%></li>
         <li><%= link_to "Group list", groups_path%></li>
+        <li><%= link_to "Photos", photos_group_path(@current_user.id)%></li>
         <li><%= link_to "Upload photos", new_photo_path%></li>
 
       </ul>

@@ -4335,6 +4335,7 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
 }
 .alert-info {
     color: #31708f;
+    opacity: 0.9;
     background-color: #d9edf7;
     border-color: #bce8f1
 }
@@ -5766,5 +5767,3 @@ button.close {
         display: none!important
     }
 }
-
-/*# sourceMappingURL=bootstrap.min.css.map */

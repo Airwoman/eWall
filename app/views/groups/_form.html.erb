@@ -20,12 +20,12 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-3 col-xs-3 table_title">
+              <div class="col-md-2 col-xs-2 table_title">
                 <p class="help-block"></p>
                 <label class="control-label">Group Name</label>
                 <p class="help-block"></p>
               </div>
-              <div class="col-md-9 col-xs-9">
+              <div class="col-md-10 col-xs-10">
                 <div class="controls">
                   <p class="help-block"></p>
                   <%= f.text_field :name, class:"form-control" %>
@@ -33,7 +33,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <div class="row buttons">
               <%= f.submit "Submit", class: "btn btn-primary"%>
               <%= link_to 'Back', groups_path ,class: "btn btn-default" %>
             </div>
