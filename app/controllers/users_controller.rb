@@ -63,7 +63,10 @@ class UsersController < ApplicationController
 
 
   def wall
-    @stacks = Stack.all
+    @stacks = @current_user.stacks.where.not(temp_photo: nil)
+    if @stacks.empty?
+      redirect_to groups_path
+    end
   end
 
   private

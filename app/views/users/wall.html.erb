@@ -1,27 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <link rel="stylesheet" href="/assets/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
 
-  <script src="/assets/jquery-ui.js"></script>
-
-</head>
 
 <style media="screen">
 
 #transfer {
   float: left;
   width:100vw;
-  height: 10vh;
+  height: 15vh;
   min-height: 8em;
   padding: 1em;
   bottom: -15vh;
   background: #000;
   position: fixed;
 }
-.transfer.custom-state-active { background: #999; }
 .transfer li {
   float: left;
   width: 96px;
@@ -40,7 +30,6 @@
   width: 100%;
   height: 80vh;
   min-height: 20em;
-  background: #424f32;
 }
 #pictureWall h4 .ui-icon { float: left; }
 #pictureWall .transfer h5 { display: none; }
@@ -53,17 +42,16 @@
   <div class="savechange">
     <input type="button" name="name" value="save" id="saveall">
   </div>
-  <% if @current_user.ewalls.count == 0 %>
+  <% if @current_user.ewalls.count == 0 && @current_user.ewalls%>
   <div id="pictureWall" class="ui-widget-content ui-state-default">
     <ul id="pics">
-
     </ul>
   </div>
   <% else %>
   <div id="pictureWall" class="ui-widget-content ui-state-default">
     <ul id="pics">
-      <%= @current_user.ewalls.each do|ewall|%>
-      <li><%= ewall.ewall_photo.image%></li>
+      <% @current_user.ewalls.where.not(position_x: nil).each do|ewall|%>
+        <img src="<%= ewall.ewall_photo.image.url%>" class="photo<%=ewall.id %>" id ="<%=ewall.photo_id%>" style= "position: absolute; width: 50px; height: 28.125px; top: <%= ewall.position_y.to_i%>px; left: <%= ewall.position_x.to_i %>px;">
       <% end %>
     </ul>
   </div>
@@ -73,7 +61,7 @@
 <div class="ui-widget ui-helper-clearfix">
 
 <ul id="transfer" class="transfer ui-helper-reset ui-helper-clearfix">
-  <% @current_user.stacks.each do |stack|%>
+  <% @stacks.each do |stack|%>
   <li class="ui-widget-content ui-corner-tr" id="<%= stack.id%>">
     <%= image_tag(stack.temp_photo.image, class: "img-circle img-responsive")%>
     <%= link_to 'Delete image', 'link/to/move', class:"ui-icon ui-icon-circle-arrow-n"%>
@@ -94,7 +82,6 @@
 
 $(document).ready(function(){
 
-
   function getPosition(el) {
   var xPos = 0;
   var yPos = 0;
@@ -104,7 +91,6 @@ $(document).ready(function(){
       // deal with browser quirks with body/window/document and page scroll
       var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
       var yScroll = el.scrollTop || document.documentElement.scrollTop;
-
       xPos += (el.offsetLeft - xScroll + el.clientLeft);
       yPos += (el.offsetTop - yScroll + el.clientTop);
     } else {
@@ -112,28 +98,26 @@ $(document).ready(function(){
       xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
       yPos += (el.offsetTop - el.scrollTop + el.clientTop);
     }
-
     el = el.offsetParent;
   }
   return {
     x: xPos,
     y: yPos
-  };
-}
+    };
+  }
 
-// deal with the page getting resized or scrolled
-window.addEventListener("scroll", updatePosition, false);
-window.addEventListener("resize", updatePosition, false);
+  // deal with the page getting resized or scrolled
+  window.addEventListener("scroll", updatePosition, false);
+  window.addEventListener("resize", updatePosition, false);
 
-function updatePosition() {
-  // add your code to update the position when your browser
-  // is resized or scrolled
-}
-
+  function updatePosition() {
+    // add your code to update the position when your browser
+    // is resized or scrolled
+  }
 
   $("#saveall").click(function () {
     var myElements = document.querySelectorAll("#pictureWall img");
-
+    debugger;
     for (var i = 0; i < myElements.length; i++) {
       var position = getPosition(myElements[i]);
       var ewallphotoid = myElements[i].id;
@@ -169,15 +153,7 @@ function updatePosition() {
      });
    }, 10000);
  });
-
 });
-
-
-
-
-
-
-
 
 
 $(function() {

@@ -20,12 +20,16 @@
 <ul id="group_gallery" class="group_gallery ui-helper-reset ui-helper-clearfix">
 	<% @photos.each do |photo| %>
 				<li class="ui-widget-content ui-corner-tr" id="photo-id-<%= photo.id %>">
+
           <div class="imagewrap">
             <%= link_to image_tag(photo.image_url, class: "photo_list"), photo %>
-						<%= link_to photo_path(photo), class: "delete", method: :delete, remote: true do %>
-							<i class="fa fa-times" aria-hidden="true"></i>
+						<% if @current_user.id == 1 %>
+							<%= link_to photo_path(photo), class: "delete", method: :delete, remote: true do %>
+								<i class="fa fa-times" aria-hidden="true"></i>
+							<% end %>
 						<% end %>
           </div>
+
 			    <a href="/assets/1.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
 			    <a href="link/to/move" title="Move this image" class="ui-icon ui-icon-arrowthickstop-1-s">Move image</a>
 					<%= link_to like_photo_path(photo), method: :post, remote: true do %>

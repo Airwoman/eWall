@@ -12,7 +12,10 @@
   <link rel="stylesheet" href="/assets/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
   <link type="text/css" rel="stylesheet" href="/assets/slicebox.css" />
   <script src="/assets/jquery.easing.min.js"></script>
-  <script src="/assets/jquery-ui.js"></script> 
+  <script src="/assets/jquery-ui.js"></script>
+  <script type="text/javascript" src="/assets/modernizr.min.js"></script>
+  <script type="text/javascript" src="/assets/jquery.slicebox.js"></script>
+
 </head>
 <body>
   <div class="menu">
@@ -37,8 +40,6 @@
       <% if @current_user && @current_user.role == 1 %>
       <ul class="nav navbar-nav">
         <li><%= link_to "All users", users_path%></li>
-        <li><%= link_to "View profile", @current_user %></li>
-        <li><%= link_to "Edit profile", edit_user_path(@current_user) %></li>
         <li><%= link_to "Create Group", new_group_path%></li>
         <li><%= link_to "Group list", groups_path%></li>
         <li><%= link_to "Photos", photos_path%></li>
@@ -52,10 +53,11 @@
 
       <% elsif @current_user && @current_user.role != 1 %>
       <ul class="nav navbar-nav">
-        <li><%= link_to "View profile", @current_user %></li>
-        <li><%= link_to "Edit profile", edit_user_path(@current_user) %></li>
+        <li><%= link_to "My E-wall", wall_path(@current_user.id)%></li>
         <li><%= link_to "Create Group", new_group_path%></li>
         <li><%= link_to "Group list", groups_path%></li>
+        <li><%= link_to "Upload photos", new_photo_path%></li>
+
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "Hi,#{@current_user.name}", @current_user  %></li>

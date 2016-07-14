@@ -23,14 +23,10 @@ class EwallsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @ewall.update(ewall_params)
-        format.html { redirect_to @ewall, notice: 'Ewall was successfully saved.' }
-        format.json { render :show, status: :ok, location: @ewall }
-      else
-        format.html { render :edit }
-        format.json { render json: @ewall.errors, status: :unprocessable_entity }
-      end
+    if @ewall.update(ewall_params)
+      render json: @ewall.to_json, status: :ok
+    else
+      render json: @ewall.errors, status: :unprocessable_entity
     end
   end
 

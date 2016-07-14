@@ -32,7 +32,7 @@
                       <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
                       <td><%= link_to 'Show', group %></td>
                       <% elsif @current_user && @current_user.groups.include?(group)%>
-                      <td><%= group.name %></td>
+                      <td><%= link_to "#{group.name}", photos_group_path(group)%></td>
                       <td><%= group.creator_id %></td>
                       <td></td>
                       <td></td>
