@@ -29,7 +29,7 @@
 						<% end %>
           </div>
 
-			    <a href="/assets/1.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+			    <a href="<%= photo.image%>" title="View larger image" class="fancybox pull-left"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
 			    <a href="link/to/move" title="Move this image" class="ui-icon ui-icon-arrowthickstop-1-s">Move image</a></br></br>
 					<div class="heart">
 						<%= link_to like_photo_path(photo), method: :post, remote: true do %>
@@ -56,7 +56,10 @@
 
 
 <script>
+
 $(document).ready(function(){
+	$(".fancybox").fancybox();
+
   $("#transfer").mouseover(function(){
    $(this).css({
      "bottom": "0",
@@ -148,18 +151,20 @@ $(function() {
   });
 
   // put the image to transfer stack function
-  var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+  var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh pull-right'>Recycle image</a>";
   function MoveImageToTransfer( $item ) {
     $item.fadeOut(function() {
       var $list = $( "ul", $transfer ).length ?
         $( "ul", $transfer ) :
         $( "<ul class='group_gallery ui-helper-reset'/>" ).appendTo( $transfer );
       $item.find( "a.ui-icon-arrowthickstop-1-s" ).remove();
+			$item.find( "div.heart" ).remove();
+
       $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
         $item
-          .animate({ width: "48px" })
+          .animate({ width: "80px" })
           .find( "img" )
-          	.animate({ height: "36px" });
+          	.animate({ height: "60px" });
       });
     });
   $( "li", $group_gallery ).draggable();
@@ -183,26 +188,6 @@ $(function() {
     });
   }
 
-  // image preview function, demonstrating the ui.dialog used as a modal window
-  function viewLargerImage( $link ) {
-    var src = $link.attr( "href" ),
-      title = $link.siblings( "img" ).attr( "alt" ),
-      $modal = $( "img[src$='" + src + "']" );
-
-    if ( $modal.length ) {
-      $modal.dialog( "open" );
-    } else {
-      var img = $( "<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />" )
-        .attr( "src", src ).appendTo( "body" );
-      setTimeout(function() {
-        img.dialog({
-          title: title,
-          width: 400,
-          modal: true
-        });
-      }, 1 );
-    }
-  }
 
   // resolve the icons behavior with event delegation
   $( "ul.group_gallery > li" ).click(function( event ) {
@@ -211,8 +196,6 @@ $(function() {
 
     if ( $target.is( "a.ui-icon-arrowthickstop-1-s" ) ) {
       MoveImageToTransfer( $item );
-    } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
-      viewLargerImage( $target );
     } else if ( $target.is( "a.ui-icon-refresh" ) ) {
       recycleImage( $item );
     }
