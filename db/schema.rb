@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714041914) do
+ActiveRecord::Schema.define(version: 20160714123558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20160714041914) do
     t.integer "photo_id"
     t.string  "position_x"
     t.string  "position_y"
+    t.string  "width"
+    t.string  "height"
   end
 
   create_table "groups", force: :cascade do |t|

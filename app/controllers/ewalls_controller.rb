@@ -41,7 +41,7 @@ class EwallsController < ApplicationController
     end
 
     def ewall_params
-      params.require(:ewall).permit(:photo_id, :user_id, :position_x, :position_y)
+      params.require(:ewall).permit(:photo_id, :user_id, :position_x, :position_y, :width, :height)
     end
 
 
