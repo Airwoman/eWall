@@ -17,6 +17,7 @@
 <div class="ui-widget ui-helper-clearfix">
 
 <ul id="group_gallery" class="group_gallery ui-helper-reset ui-helper-clearfix">
+
 	<% @photos.each do |photo| %>
 				<li class="ui-widget-content ui-corner-tr" id="photo-id-<%= photo.id %>">
 
@@ -31,7 +32,7 @@
 
 			    <a href="<%= photo.image%>" title="View larger image" class="fancybox pull-left"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
 					<div class="heart">
-						<%= link_to like_photo_path(photo), method: :post, remote: true do %>
+						<%= link_to like_photo_path(photo), class: "likeheart", method: :post, remote: true do %>
 	            <i class="fa like-button <%= photo.likes.include?(@current_user) ? 'fa-heart' : 'fa-heart-o' %> " aria-hidden="true"></i>
 	          <%end %>
 						<div class="totalLikes pull-right"><%= photo.likes.count%></div>
@@ -124,6 +125,18 @@ $(function() {
 			});
 		}
   });
+	$(".likeheart").click(function() {
+		console.log(this);
+		console.log(this.href);
+		var regx = /\d+/g;
+		regx.exec(this.href);
+		var pcid = parseInt(regx.exec(this.href));
+		console.log(pcid);
+		$.ajax({
+			url: "/photos/"+pcid+"/like",
+			type: "POST",
+		});
+	})
 
   // let the transfer be droppable, accepting the group_gallery items
   $transfer.droppable({
@@ -166,7 +179,7 @@ $(function() {
           	.animate({ height: "60px" });
       });
     });
-  $( "li", $group_gallery ).draggable();
+  $( "li", $group_gallery ).draggable({cancel: "a"});
   }
 
   // put the image back to group_gallery function
