@@ -2850,6 +2850,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
     background-color: #fff
 }
 .btn-danger {
+    margin-top: 8px;
     color: #fff;
     background-color: #d9534f;
     border-color: #d43f3a
@@ -4505,6 +4506,8 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
 .list-group {
     padding-left: 0;
     margin-bottom: 20px
+    
+    text-align:center;
 }
 .list-group-item {
     position: relative;

@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
   def join
 
     @group.users << @current_user
-    redirect_to users_path
+    redirect_to groups_path
   end
 
   # GET /groups/new

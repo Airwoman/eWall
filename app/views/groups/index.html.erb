@@ -53,7 +53,8 @@
                       <td><%= group.name %></td>
                       <td><%= group.creator_id %></td>
                       <td></td>
-                      <td><%= link_to 'Join', join_group_path(id: group.id), method: :patch%></td>
+											<!-- <td><input type="button" name="name" value="Join" id="<%= group.id %>" class="joining"></td> -->
+                      <td><%= link_to 'Join', join_group_path(id: group.id), class:"joining", method: :patch%></td>
                       <td><%= link_to 'Show', group %></td>
                       <% end %>
 										</tr>
@@ -68,3 +69,15 @@
     </section>
   </div>
 </div>
+
+<!-- <script>
+	$(".joining").click(function () {
+		var gid = parseInt(this.id);
+
+		$.ajax({
+			url: "/groups/"+gid+"/join",
+			type: "PATCH"
+		});
+
+	});
+</script> -->

@@ -130,6 +130,8 @@ $(document).ready(function(){
         url: "/ewalls/"+parseInt(ewall_id[0]),
         type: "PATCH",
         data: ewallData
+      }).done(function () {
+        alert("You PicWall saved!");
       });
     }
   });
