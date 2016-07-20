@@ -18,6 +18,9 @@
   <script type="text/javascript" src="/assets/jquery.slicebox.js"></script>
   <link rel="stylesheet" href="/assets/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
   <script type="text/javascript" src="/assets/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="/assets/jquery.fancybox-buttons.js"></script>
+  <script type="text/javascript" src="/assets/jquery.fancybox-media.js"></script>
+  <script type="text/javascript" src="/assets/jquery.fancybox-thumbs.js"></script>
   <script type="text/javascript">
   var activeEl = 2;
     $(function() {
@@ -65,7 +68,7 @@
         <li><%= link_to "My E-wall", wall_path(@current_user.id)%></li>
         <li><%= link_to "Create Group", new_group_path%></li>
         <li><%= link_to "Group list", groups_path%></li>
-        <li><%= link_to "Photos", photos_group_path(@current_user.id)%></li>
+        <li><%= link_to "Photos", photos_path%></li>
         <li><%= link_to "Upload photos", new_photo_path%></li>
 
       </ul>

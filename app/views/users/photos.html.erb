@@ -1,0 +1,218 @@
+<div class="panel-body g_g">
+	<p id="notice"><%= notice %></p>
+	<div class="pull-left">
+		<div class="btn-group">
+		</div>
+	</div>
+	<div class="pull-right">
+		<div class="btn-group">
+			<%= link_to 'New Photo', new_photo_path, class: "btn btn-success btn-filter" %>
+		</div>
+		<div class="btn-group">
+			<%= link_to 'Delete selected', photos_path, class: "btn btn-default" %>
+		</div>
+	</div>
+</div>
+
+<div class="ui-widget ui-helper-clearfix">
+
+<ul id="group_gallery" class="group_gallery ui-helper-reset ui-helper-clearfix">
+
+	<% @photos.each do |photo| %>
+				<li class="ui-widget-content ui-corner-tr" id="photo-id-<%= photo.id %>">
+
+          <div class="imagewrap">
+            <%= link_to image_tag(photo.image_url, class: "photo_list"), photo %>
+						<% if @current_user.id == 1 %>
+							<%= link_to photo_path(photo), class: "delete", method: :delete, remote: true do %>
+								<i class="fa fa-times" aria-hidden="true"></i>
+							<% end %>
+						<% end %>
+          </div>
+
+			    <a href="<%= photo.image%>" title="View larger image" class="fancybox pull-left"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+					<div class="heart">
+						<%= link_to like_photo_path(photo), class: "likeheart", method: :post, remote: true do %>
+	            <i class="fa like-button <%= photo.likes.include?(@current_user) ? 'fa-heart' : 'fa-heart-o' %> " aria-hidden="true"></i>
+	          <%end %>
+						<div class="totalLikes pull-right"><%= photo.likes.count%></div>
+					</div>
+
+
+          <!-- <a href="#" class="comments" id = "<%= photo.id%>"><i class="fa fa-comments" aria-hidden="true"></i></a> -->
+			  </li>
+
+	<% end %>
+</ul>
+
+</div>
+<div id="transfer" class="ui-widget-content ui-state-default">
+	<h4 class="ui-widget-header">
+    <span class="ui-icon ui-icon-arrowthickstop-1-s">
+      Transfer Station
+    </span> Transfer Station
+  </h4>
+</div>
+
+
+<script>
+
+$(document).ready(function(){
+	$(".fancybox").fancybox();
+
+  $("#transfer").mouseover(function(){
+   $(this).css({
+     "bottom": "0",
+     "-webkit-transition": "bottom 1s"
+   });
+ });
+
+ $("#transfer").mouseout(function () {
+   window.setTimeout(function () {
+     $("#transfer").css({
+       "bottom": "-10vh"
+     });
+   }, 10000);
+ });
+
+ $('.like-button').click(function() {
+		$(this).toggleClass('fa-heart');
+		$(this).toggleClass('fa-heart-o');
+		var likes = parseInt($(this).parent().next('.totalLikes').text());
+		if ($(this).hasClass("fa-heart-o")) {
+			$(this).parent().next('.totalLikes').text(likes-1);
+		} else {
+			$(this).parent().next('.totalLikes').text(likes+1);
+		}
+ });
+
+ $('.delete').click(function() {
+	 $(this).closest('li').remove();
+ })
+});
+
+
+$(function() {
+  var $group_gallery = $( "#group_gallery" ),
+      $transfer = $( "#transfer" );
+
+  // let the group_gallery items be draggable
+  $( "li", $group_gallery ).draggable({
+    cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+    revert: "invalid", // when not dropped, the item will revert back to its initial position
+    containment: "document",
+    helper: "clone",
+    cursor: "move",
+		stop: function (event, ui) {
+
+			var temid = ui.helper.prevObject.attr('id');
+			var regx = /\d+/;
+			var photoid = temid.match(regx);
+			var new_user_id = "<%= @current_user.id%>";
+			var stack = { // save the data to transfer stack
+        stack: {
+					photo_id: photoid[0],
+					user_id: new_user_id
+        }
+			};
+			console.log(stack);
+			$.ajax({
+				url: "/stacks.json",
+				type: "POST",
+				data: stack
+			}).done(function (data) {
+				// console.log(data);
+			});
+		}
+  });
+	$(".likeheart").click(function() {
+		console.log(this);
+		console.log(this.href);
+		var regx = /\d+/g;
+		regx.exec(this.href);
+		var pcid = parseInt(regx.exec(this.href));
+		console.log(pcid);
+		$.ajax({
+			url: "/photos/"+pcid+"/like",
+			type: "POST",
+		});
+	})
+
+  // let the transfer be droppable, accepting the group_gallery items
+  $transfer.droppable({
+    accept: "#group_gallery > li",
+    activeClass: "ui-state-highlight",
+    drop: function( event, ui ) {
+      MoveImageToTransfer( ui.draggable );
+			var temid = ui.draggable.attr('id');
+			var regx = /\d+/;
+			var photoid = temid.match(regx);
+
+			console.log(photoid[0]);
+
+    }
+  });
+
+  // let the group_gallery be droppable as well, accepting items from the transfer
+  $group_gallery.droppable({
+    accept: "#transfer li",
+    activeClass: "custom-state-active",
+    drop: function( event, ui ) {
+      recycleImage( ui.draggable );
+    }
+  });
+
+  // put the image to transfer stack function
+  var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh pull-right'>Recycle image</a>";
+  function MoveImageToTransfer( $item ) {
+    $item.fadeOut(function() {
+      var $list = $( "ul", $transfer ).length ?
+        $( "ul", $transfer ) :
+        $( "<ul class='group_gallery ui-helper-reset'/>" ).appendTo( $transfer );
+      $item.find( "a.ui-icon-arrowthickstop-1-s" ).remove();
+			$item.find( "div.heart" ).remove();
+
+      $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
+        $item
+          .animate({ width: "80px" })
+          .find( "img" )
+          	.animate({ height: "60px" });
+      });
+    });
+  $( "li", $group_gallery ).draggable({cancel: "a"});
+  }
+
+  // put the image back to group_gallery function
+  var transfer_icon = "<a href='link/to/move' title='move this image' class='ui-icon ui-icon-arrowthickstop-1-s'>move image</a>";
+  function recycleImage( $item ) {
+    $item.fadeOut(function() {
+      $item
+        .find( "a.ui-icon-refresh" )
+          .remove()
+        .end()
+        .css( "width", "96px")
+        .find( "img" )
+        	.css( "height", "72px" )
+        .end()
+        .appendTo( $group_gallery )
+        .fadeIn();
+    });
+  }
+
+
+  // resolve the icons behavior with event delegation
+  $( "ul.group_gallery > li" ).click(function( event ) {
+    var $item = $( this ),
+      $target = $( event.target );
+
+    if ( $target.is( "a.ui-icon-arrowthickstop-1-s" ) ) {
+      MoveImageToTransfer( $item );
+    } else if ( $target.is( "a.ui-icon-refresh" ) ) {
+      recycleImage( $item );
+    }
+
+    return false;
+  });
+});
+
+</script>
