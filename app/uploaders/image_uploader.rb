@@ -2,19 +2,21 @@
 
 class ImageUploader < CarrierWave::Uploader::Base
  include CarrierWave::MiniMagick
+ include CarrierWave::RMagick
+ include Cloudinary::CarrierWave
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
+  # storage :file
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
-  def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
-  end
+  # def store_dir
+  #   "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  # end
 
   process :rotate
 
@@ -45,6 +47,22 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Add a white list of extensions which are allowed to be uploaded.
+
+  # Crop to 275px, 206px
+  version :thumbnail do
+    process resize_to_fill: [275, 206]
+  end
+
+  # crop to 62px, 62px
+  version :mini_tumbnail do
+    process resize_to_fill: [62, 62]
+  end
+
+  # crop to 870px, 261px
+  version :detail do
+    process resize_to_fill: [870, 261]
+  end
+
   # For images you might use something like this:
   def extension_white_list
     %w(jpg jpeg gif png)
