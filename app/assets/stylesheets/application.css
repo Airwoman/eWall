@@ -13,13 +13,12 @@
 
 
   *= require jquery-ui.css
-  *= require font-awesome.min.css
+  *= require font-awesome.css
   *= require custom.css
   *= require demo.css
   *= require bootstrap.min.css
   *= require slicebox.css
-  *= require KaushanScript-Regular.ttf
-  *= require jquery.fancybox.css?v=2.1.5
+  *= require jquery.fancybox.css
 
   *= require_tree .
   *= require_self
