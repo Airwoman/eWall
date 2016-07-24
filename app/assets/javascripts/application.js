@@ -14,5 +14,13 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require jquery.easing.min.js
+//= require jquery-ui.js
+//= require modernizr.min.js
+//= require jquery.slicebox.js
+//= require jquery.fancybox.pack.js?v=2.1.5
+//= require jquery.fancybox-buttons.js
+//= require jquery.fancybox-media.js
+//= require jquery.fancybox-thumbs.js
 //= require turbolinks
 //= require_tree .
