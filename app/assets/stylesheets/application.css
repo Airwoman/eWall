@@ -20,6 +20,8 @@
   *= require slicebox.css
   *= require jquery.fancybox.css
 
+  *= require_tree .
+
   *= require_self
 
  */
