@@ -16,11 +16,10 @@
   *= require font-awesome.css
   *= require custom.css
   *= require demo.css
-  *= require bootstrap.min.css
+  *= require bootstrap.css
   *= require slicebox.css
   *= require jquery.fancybox.css
 
-  *= require_tree .
   *= require_self
 
  */
