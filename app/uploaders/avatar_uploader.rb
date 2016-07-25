@@ -1,8 +1,9 @@
 # encoding: utf-8
 
 class AvatarUploader < CarrierWave::Uploader::Base
-  include CarrierWave::RMagick
   include Cloudinary::CarrierWave
+  include CarrierWave::RMagick
+  
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
