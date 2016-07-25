@@ -23,3 +23,4 @@
 //= require jquery.fancybox-media.js
 //= require jquery.fancybox-thumbs.js
 //= require turbolinks
+//= require bootstrap-sprockets

@@ -16,15 +16,19 @@
   *= require font-awesome.css
   *= require custom.css
   *= require demo.css
-  *= require bootstrap.css
   *= require slicebox.css
   *= require jquery.fancybox.css
 
   *= require_tree .
 
+
   *= require_self
 
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 body {
   background-color:#fff;
 }
@@ -107,4 +111,7 @@ hr {
 .immg{
   padding-top: 20px;
   text-align: center;
+}
+.btn-danger{
+  margin-top: 8px;
 }
