@@ -53,7 +53,7 @@
   <div id="pictureWall" >
     <ul id="pics">
       <% @ewalls.each do|ewall|%>
-        <img src="<%= ewall.ewall_photo.image.url%>" class="photo<%=ewall.id %>" id ="<%=ewall.photo_id%>" style= "position: absolute; width: <%= ewall.width.to_i%>px; height: <%= ewall.height.to_i%>px; top: <%= ewall.position_y.to_i%>px; left: <%= ewall.position_x.to_i %>px;">
+        <%= image_tag ewall.ewall_photo.image.url, class: "photo#{ewall.id}", id: ewall.photo_id, style: "position: absolute; width: #{ewall.width.to_i}px; height: #{ewall.height.to_i}px; top: #{ewall.position_y.to_i}px; left: #{ewall.position_x.to_i }px;" %>
       <% end %>
     </ul>
   </div>
@@ -62,7 +62,7 @@
 
 <ul id="transfer" class="transfer ui-helper-reset ui-helper-clearfix">
   <% @stacks.each do |stack|%>
-  <li class="ui-widget-content ui-corner-tr" id="<%= stack.id%>">
+  <li class="ui-widget-content ui-corner-tr" id="<%= stack.id %>">
     <%= image_tag(stack.temp_photo.image, class: "img-responsive")%>
     <%= link_to 'Delete image', 'link/to/move', class:"ui-icon ui-icon-circle-arrow-n"%>
   </li>
