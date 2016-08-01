@@ -77,7 +77,7 @@
             </a>
             <div class="immg">
               <% @photos.each do |photo|%>
-              <img src="<%= photo.image%>" class="img-thumbnail" alt="Cinque Terre" width="105px">
+              <%= image_tag photo.image, class: "img-thumbnail" %>
               <% end %>
             </div>
 
